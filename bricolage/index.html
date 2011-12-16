@@ -18,7 +18,7 @@
         <div class="container">
             <header>
                 <h1 class="logo">Social News</h1>
-                <nav>
+                <nav class="navigation">
                     <ul>
                         <li>All</li>
                         <li>Facebook</li>
@@ -44,6 +44,7 @@
                 </div>
 
                 <div class="block block-isg block-style-3 col2">
+                    <img class="block-image" src="img/fpo/instagram.jpg"/>
                     <div class="block-message">Violence returns to Tahrir</div>
                     <div class="block-rubric">Instagram</div>
                     <div class="block-timestamp">Tues, 11:14am</div>
@@ -72,10 +73,16 @@
         <!-- end scripts -->
 
         <script>
+
+            // Initialize Masonry
             var $main = $('#main');
             $main.masonry({
                 columnWidth: 254
             });
+
+            //Initialize Fittext
+            $('.block-message').fitText(0.8);
+
         </script>
 
         <script>

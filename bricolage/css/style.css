@@ -210,16 +210,28 @@ body {
 }
 
 .container {
-    width: 1018px;
+    width: 1020px;
     margin: 0 auto;
 }
 
 .logo {
+    color: #fff;
     font: bold 57px "Verdana", sans-serif;
+    float: left;
 }
 
-.block {
-    height: 289px;
+.navigation {
+    color: #fff;
+    float: right;
+}
+
+.navigation li {
+    float: left;
+    margin: 0 10px;
+}
+
+#main {
+    clear: both;
 }
 
 .col1 {
@@ -229,6 +241,44 @@ body {
 .col2 {
     width: 508px;
 }
+
+.block {
+    color: #fff;
+    height: 289px;
+}
+
+.block-message {
+    position: relative;
+    font: bold 25px/1.2 "Verdana", sans-serif;
+}
+
+.block-style-1 .block-message {
+    padding: 40px 12px 0;
+}
+
+.block-style-2 .block-message {
+    padding: 40px 12px 0;
+}
+
+.block-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.block-rubric {
+    position: absolute;
+    top: 17px;
+    left: 13px;
+}
+
+.block-timestamp {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
+
+
 
 
 
