@@ -205,7 +205,30 @@ td { vertical-align: top; }
 /* ==|== primary styles =====================================================
    Author:
    ========================================================================== */
+body {
+    background: #000;
+}
 
+.container {
+    width: 1018px;
+    margin: 0 auto;
+}
+
+.logo {
+    font: bold 57px "Verdana", sans-serif;
+}
+
+.block {
+    height: 289px;
+}
+
+.col1 {
+    width: 254px;
+}
+
+.col2 {
+    width: 508px;
+}
 
 
 
