@@ -43,8 +43,8 @@ body, button, input, select, textarea { font-family: sans-serif; color: #222; }
  * Also: hot pink! (or customize the background color to match your design)
  */
 
-::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
-::selection { background: #fe57a1; color: #fff; text-shadow: none; }
+/*::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }*/
+/*::selection { background: #fe57a1; color: #fff; text-shadow: none; }*/
 
 
 /* =============================================================================
@@ -245,11 +245,53 @@ body {
 .block {
     color: #fff;
     height: 289px;
+    position: relative;
+}
+
+.block-rubric {
+    z-index: 10;
+}
+
+.block-timestamp {
+    z-index: 10;
 }
 
 .block-message {
     position: relative;
-    font: bold 25px/1.2 "Verdana", sans-serif;
+    font: bold 25px/1 "Verdana", sans-serif;
+    z-index: 10;
+}
+
+.block-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.block-fcb:before {
+    background: rgba(56, 88, 163, 0.8);
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.block-style-1 .block-rubric,
+.block-style-2 .block-rubric {
+    position: absolute;
+    top: 17px;
+    left: 13px;
+}
+
+.block-style-1 .block-timestamp,
+.block-style-2 .block-timestamp {
+    position: absolute;
+    top: 20px;
+    right: 10px;
 }
 
 .block-style-1 .block-message {
@@ -260,32 +302,50 @@ body {
     padding: 40px 12px 0;
 }
 
-.block-image {
+.block-style-3 .block-message {
+    height: 30%;
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: 90px;
+    text-align: center;
 }
 
-.block-rubric {
-    position: absolute;
-    top: 17px;
-    left: 13px;
+    .block-style-3 .block-rubric {
+        position: absolute;
+        bottom: 70px;
+    }
+
+
+
+
+
+
+
+
+
+
+/**** Transitions ****/
+
+.masonry,
+.masonry .masonry-brick {
+  -webkit-transition-duration: 0.7s;
+     -moz-transition-duration: 0.7s;
+       -o-transition-duration: 0.7s;
+          transition-duration: 0.7s;
 }
 
-.block-timestamp {
-    position: absolute;
-    top: 20px;
-    right: 10px;
+.masonry {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
 }
 
-
-
-
-
-
-
-
-
+.masonry .masonry-brick {
+  -webkit-transition-property: left, right, top;
+     -moz-transition-property: left, right, top;
+       -o-transition-property: left, right, top;
+          transition-property: left, right, top;
+}
 
 
 

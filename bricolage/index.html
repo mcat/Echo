@@ -95,7 +95,9 @@
             // Initialize Masonry
             var $main = $('#main');
             $main.masonry({
-                columnWidth: 254
+                columnWidth: 254,
+                isFitWidth: true,
+                isAnimated: !Modernizr.csstransitions
             });
 
             //Initialize Fittext
