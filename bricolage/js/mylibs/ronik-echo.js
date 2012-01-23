@@ -1,11 +1,21 @@
-(function($){
+function RonikEchoStream(options) {
 
-    var appKey = "dev.ronikdesign";
+    var settings = {
+        appKey: "dev.ronikdesign",
+        query: "scope:" + window.location.href,
+        interval: 5000,
+        topic: "/ronik/echo/search"
+    };
+    _.extend(settings, options);
 
-    function doSearch(since) {
+    var timeoutId = null;
+    var since = null;
+
+
+    function doSearch() {
         var data = {
-            appkey: appKey,
-            q: "scope:http://www.ronikdesign.com/test.html"
+            appkey: settings.appKey,
+            q: settings.query
         };
 
         if(since) {
@@ -16,28 +26,30 @@
             dataType: "jsonp",
             data: data,
             success: function(data) {
-                $.publish("/echo/search", [data]);
+                since = data.nextSince;
+                $.publish(settings.topic, [data]);
             }
 
         });
     }
 
-    $.subscribe("/echo/search", function(event, data){
-        setTimeout(function(){
-            doSearch(data.nextSince);
-        }, 5000);
+    function pause() {
+        if(timeoutId != null) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+        }
+    }
+
+    // Set up the interval
+    $.subscribe(settings.topic, function(event, data){
+        timeoutId = setTimeout(doSearch, settings.interval);
     });
 
-    $(function(){
-        doSearch();
-    });
-})(jQuery);
+
+    return {
+        start: doSearch,
+        pause: pause
+    };
+}
 
 
-(function($){
-    $.subscribe("/echo/search", function(event, data){
-        $.each(data.entries, function(){
-            $("#echo-stream").prepend("<div>" + this.object.content +"</div>");
-        });
-    });
-})(jQuery);
