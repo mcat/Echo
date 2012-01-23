@@ -27,7 +27,11 @@ function RonikEchoStream(options) {
             data: data,
             success: function(data) {
                 since = data.nextSince;
-                $.publish(settings.topic, [data]);
+
+                //only publish an event when there is new content
+                if(data.entries.length != 0) {
+                    $.publish(settings.topic, [data]);
+                }
             }
 
         });
