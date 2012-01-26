@@ -1,5 +1,5 @@
 var Ronik = Ronik || {};
-Ronik.EchoStream = function(options) {
+Ronik.EchoStreamer = function(options) {
 
     var settings = {
         appKey: "dev.ronikdesign",
