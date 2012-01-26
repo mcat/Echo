@@ -1,4 +1,5 @@
-function RonikEchoStream(options) {
+var Ronik = Ronik || {};
+Ronik.EchoStream = function(options) {
 
     var settings = {
         appKey: "dev.ronikdesign",
@@ -28,6 +29,8 @@ function RonikEchoStream(options) {
             success: function(data) {
                 since = data.nextSince;
 
+                timeoutId = setTimeout(doSearch, settings.interval);
+
                 //only publish an event when there is new content
                 if(data.entries.length != 0) {
                     $.publish(settings.topic, [data]);
@@ -43,11 +46,6 @@ function RonikEchoStream(options) {
             timeoutId = null;
         }
     }
-
-    // Set up the interval
-    $.subscribe(settings.topic, function(event, data){
-        timeoutId = setTimeout(doSearch, settings.interval);
-    });
 
 
     return {

@@ -8,20 +8,34 @@
     <script>
         var topic = "/echo/search";
 
-        new RonikEchoStream({
-            query: "scope:ronikdesign.com/test.html",
+        new Ronik.EchoStream({
+            query: "childrenof:ronikdesign.com/test.html",
             topic: topic
         }).start();
 
+        var posts = {};
+
         $.subscribe(topic, function(event, data){
             $.each(data.entries, function(){
-                $("#echo-stream").prepend("<div>" + this.object.content +"</div>");
+                if(!posts[this.object.id]) {
+                    var $element = $('<div class="post">' + this.object.content + '</div>');
+                    posts[this.object.id] = $element;
+
+                    var parentId = this.targets[0].id;
+                    if(posts[parentId]) {
+                        posts[parentId].append($element);
+                    } else {
+                        $("#echo-stream").prepend($element);
+                    }
+                }
             });
         });
     </script>
-
+    <style>
+        .post { margin-left: 20px; }
+    </style>
 </head>
 <body>
-    <div id="echo-stream"></div>
+<div id="echo-stream"></div>
 </body>
 </html>

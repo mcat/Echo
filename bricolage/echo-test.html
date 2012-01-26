@@ -4,29 +4,37 @@
     <script src="http://cdn.echoenabled.com/clientapps/v2/submit.js"></script>
     <script src="http://cdn.echoenabled.com/clientapps/v2/plugins/form-auth.js"></script>
     <script src="http://cdn.echoenabled.com/clientapps/v2/stream.js"></script>
+    <script src="http://cdn.echoenabled.com/clientapps/v2/plugins/reply.js"></script>
 
 </head>
 <body>
-    <div id="echo-stream"></div>
-    <div id="submit-form"></div>
-    <script type="text/javascript">
-        var appKey = "dev.ronikdesign";
-        var url = "http://www.ronikdesign.com/test.html";
+<div id="echo-stream"></div>
+<div id="submit-form"></div>
+<script type="text/javascript">
+    var appKey = "dev.ronikdesign";
+    var url = "http://www.ronikdesign.com/test.html";
 
-        new Echo.Submit({
-            "target": document.getElementById("submit-form"),
-            "appkey": appKey,
-            "targetURL": url,
-            "plugins": [{
+    new Echo.Submit({
+        "target": document.getElementById("submit-form"),
+        "appkey": appKey,
+        "targetURL": url,
+        "plugins": [{
+            "name": "FormAuth"
+        }]
+    });
+
+    new Echo.Stream({
+        "target": document.getElementById("echo-stream"),
+        "appkey": appKey,
+        "query": "childrenof:" + url,
+        "plugins": [{
+            "name": "Reply",
+            "actionString": "Write reply here...",
+            "nestedPlugins": [{
                 "name": "FormAuth"
             }]
-        });
-
-        new Echo.Stream({
-            "target": document.getElementById("echo-stream"),
-            "appkey": appKey,
-            "query": "scope:" + url
-        });
-    </script>
+        }]
+    });
+</script>
 </body>
 </html>
