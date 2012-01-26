@@ -1,41 +1,118 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
 <head>
-    <script src="js/libs/jquery-1.7.1.js"></script>
-    <script src="js/mylibs/underscore.js"></script>
-    <script src="js/mylibs/jquery.ba-tinypubsub.min.js"></script>
-    <script src="js/mylibs/ronik-echo.js"></script>
-    <script>
-        var topic = "/echo/search";
+    <meta charset="utf-8">
+
+    <title></title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile viewport optimized: h5bp.com/viewport -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/libs/modernizr-2.0.6.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <header>
+        <h1 class="logo">Social News</h1>
+        <nav class="navigation">
+            <ul>
+                <li>All</li>
+                <li>Facebook</li>
+                <li>Tweets</li>
+                <li>Video</li>
+                <li>Photo</li>
+            </ul>
+        </nav>
+    </header>
+    <div id="main" role="main">
+
+    </div>
+    <footer>
+
+    </footer>
+</div>
+<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
+<script src="js/mylibs/handlebars-1.0.0.beta.6.js"></script>
+<script src="js/mylibs/jquery.masonry.js"></script>
+<script src="js/mylibs/jquery.fittext.js"></script>
+<script src="js/mylibs/date-en-US.js"></script>
+
+<!-- scripts concatenated and minified via build script -->
+<script defer src="js/plugins.js"></script>
+<script defer src="js/script.js"></script>
+
+<script src="js/mylibs/underscore.js"></script>
+<script src="js/mylibs/jquery.ba-tinypubsub.min.js"></script>
+<script src="js/mylibs/ronik-echo.js"></script>
+<script>
+    var topic = "/echo/search";
+
+    $(function(){
+        var genericTemplate = Handlebars.compile($("#genericTemplate").html());
 
         new Ronik.EchoStreamer({
-            query: "childrenof:ronikdesign.com/test.html",
+            query: "childrenof:ronikdesign.com/test.html sortOrder:chronological",
             topic: topic
         }).start();
 
         var posts = {};
 
         $.subscribe(topic, function(event, data){
+
             $.each(data.entries, function(){
+                console.log(this);
                 if(!posts[this.object.id]) {
-                    var $element = $('<div class="post">' + this.object.content + '</div>');
+                    var $element = $(genericTemplate(this));
                     posts[this.object.id] = $element;
 
                     var parentId = this.targets[0].id;
                     if(posts[parentId]) {
-                        posts[parentId].append($element);
+                        //posts[parentId].append($element);
                     } else {
-                        $("#echo-stream").prepend($element);
+                        $("#main").prepend($element).masonry('reload');
+                        $element.find('.block-message').fitText();
                     }
                 }
             });
         });
-    </script>
-    <style>
-        .post { margin-left: 20px; }
-    </style>
-</head>
-<body>
-<div id="echo-stream"></div>
+
+    });
+</script>
+<!-- end scripts -->
+
+<script>
+
+    // Initialize Masonry
+    var $main = $('#main');
+    $main.masonry({
+        columnWidth: 254,
+        isFitWidth: true,
+        isAnimated: !Modernizr.csstransitions
+    });
+
+    //Initialize Fittext
+    $('.block-message').fitText();
+
+</script>
+
+<script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+<script type="text/x-handlebars-template" id="genericTemplate">
+    <div class="block block-fcb block-style-1 col1">
+        <div class="block-message">{{ object.content }}</div>
+        <div class="block-timestamp">{{ published }}</div>
+    </div>
+</script>
 </body>
 </html>
