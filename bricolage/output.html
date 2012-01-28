@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="js/libs/jquery-1.7.1.js"></script>
+    <script src="js/mylibs/underscore.js"></script>
+    <script src="js/mylibs/jquery.ba-tinypubsub.min.js"></script>
+    <script src="js/mylibs/ronik-echo.js"></script>
+    <script>
+        var topic = "/echo/search";
+
+        new RonikEchoStream({
+            query: "scope:ronikdesign.com/test.html",
+            topic: topic
+        }).start();
+
+        $.subscribe(topic, function(event, data){
+            $.each(data.entries, function(){
+                $("#echo-stream").prepend("<div>" + this.object.content +"</div>");
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <div id="echo-stream"></div>
+</body>
+</html>
