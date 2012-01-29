@@ -1,38 +1,46 @@
 var Ronik = Ronik || {};
-Ronik.Stream = function(options) {
+Ronik.Bricolage = function(options) {
 
     var settings = {
+        renderers: {
+            generic: new Ronik.GenericRenderer(),
+            video: new Ronik.VideoRenderer()
+        },
         topic: "/ronik/echo/search"
     };
     _.extend(settings, options);
 
     var posts = {};
-    var templates = {};
-
 
     function init() {
-        templates.generic = Handlebars.compile($("#genericTemplate").html());
-        templates.video  = Handlebars.compile($("#videoTemplate").html());
+       _.each(settings.renderers, function(renderer)  {
+           renderer.init();
+       });
 
         $.subscribe(settings.topic, function(event, data){
-            handleEntries(data.entries, templates);
+            handleEntries(data.entries);
         });
     }
 
 
-    function handleEntries(entries, templates) {
+    function handleEntries(entries) {
         $.each(entries, function(){
 
             if(!posts[this.object.id]) {
 
+                var type = "generic";
                 var $content = $('<div>' + this.object.content + '</div>'), video = getVideo($content), $element;
 
+                //Check to see if we have a video
                 if(video) {
                     console.log(video);
                     this.object.video = video;
-                    $element = $(templates.video(this));
-                } else {
-                    $element = $(templates.generic(this));
+                    type = "video";
+                }
+
+                // Render the
+                if(settings.renderers[type]) {
+                    $element = $(settings.renderers[type].render(this));
                 }
 
                 posts[this.object.id] = $element;
@@ -60,10 +68,33 @@ Ronik.Stream = function(options) {
     }
 
 
-
     return {
         start: init
     };
 };
 
+Ronik.GenericRenderer = function(post) {
+    var template = null;
 
+    return {
+        init: function() {
+            template = Handlebars.compile($("#genericTemplate").html());
+        },
+        render: function(post){
+            return template ? template(post) : "";
+        }
+    };
+};
+
+Ronik.VideoRenderer = function(post) {
+    var template = null;
+
+    return {
+        init: function() {
+            template = Handlebars.compile($("#videoTemplate").html());
+        },
+        render: function(post){
+            return template ? template(post) : "";
+        }
+    };
+};
