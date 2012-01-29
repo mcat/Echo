@@ -80,14 +80,18 @@
 
 <script type="text/x-handlebars-template" id="genericTemplate">
     <div class="block block-fcb block-style-1 col1">
+        {{#if bricolage }}
+        <img class="block-image" src="{{ bricolage.image.src }}"/>
+        {{/if}}
         <div class="block-message">{{{ object.title }}}</div>
-        <div class="block-timestamp">{{ published }}</div>
+        <div class="block-rubric">{{ source.name }}</div>
+        <div class="block-timestamp">{{ bricolage.displayDate }}</div>
     </div>
 </script>
 
 <script type="text/x-handlebars-template" id="videoTemplate">
     <div class="block block-ytb block-style-4 col2">
-        {{{ object.video }}}
+        {{{ bricolage.video.html }}}
     </div>
 </script>
 
