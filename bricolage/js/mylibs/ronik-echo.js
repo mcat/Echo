@@ -52,6 +52,6 @@ Ronik.EchoStreamer = function(options) {
         start: doSearch,
         pause: pause
     };
-}
+};
 
 

@@ -50,38 +50,19 @@
 
 <script src="js/mylibs/underscore.js"></script>
 <script src="js/mylibs/jquery.ba-tinypubsub.min.js"></script>
-<script src="js/mylibs/ronik-echo.js"></script>
+<script src="js/mylibs/ronik-stream.js"></script>
+<script src="js/mylibs/gaga.js"></script>
 <script>
     var topic = "/echo/search";
 
     $(function(){
-        var genericTemplate = Handlebars.compile($("#genericTemplate").html());
+
+        new Ronik.Stream({ topic: topic }).start();
 
         new Ronik.EchoStreamer({
             query: "childrenof:ronikdesign.com/test.html sortOrder:chronological",
             topic: topic
         }).start();
-
-        var posts = {};
-
-        $.subscribe(topic, function(event, data){
-
-            $.each(data.entries, function(){
-                console.log(this);
-                if(!posts[this.object.id]) {
-                    var $element = $(genericTemplate(this));
-                    posts[this.object.id] = $element;
-
-                    var parentId = this.targets[0].id;
-                    if(posts[parentId]) {
-                        //posts[parentId].append($element);
-                    } else {
-                        $("#main").prepend($element).masonry('reload');
-                        $element.find('.block-message').fitText();
-                    }
-                }
-            });
-        });
 
     });
 </script>
@@ -110,8 +91,13 @@
 </script>
 <script type="text/x-handlebars-template" id="genericTemplate">
     <div class="block block-fcb block-style-1 col1">
-        <div class="block-message">{{ object.content }}</div>
+        <div class="block-message">{{{ object.title }}}</div>
         <div class="block-timestamp">{{ published }}</div>
+    </div>
+</script>
+<script type="text/x-handlebars-template" id="videoTemplate">
+    <div class="block block-ytb block-style-4 col2">
+        {{{ object.video }}}
     </div>
 </script>
 </body>
