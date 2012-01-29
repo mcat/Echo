@@ -246,6 +246,12 @@ body {
     color: #fff;
     height: 289px;
     position: relative;
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+.hidden {
+    display: none;
 }
 
 .block-rubric {
@@ -258,9 +264,12 @@ body {
 
 .block-message {
     position: relative;
-    font: bold 25px/1 "Verdana", sans-serif;
+    font: bold 25px/1.3 "Verdana", sans-serif;
     z-index: 10;
-    width: 100%
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    overflow: hidden;
 }
 
 .block-image {

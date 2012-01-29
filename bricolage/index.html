@@ -1,8 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
 
-        <title></title>
+        <title>Brick Viz</title>
         <meta name="description" content="">
         <meta name="author" content="">
 
@@ -21,7 +22,7 @@
                 <nav class="navigation">
                     <ul>
                         <li>All</li>
-                        <li>Facebook</li>
+                        <li data-filter="block-fcb">Facebook</li>
                         <li>Tweets</li>
                         <li>Video</li>
                         <li>Photo</li>
@@ -32,7 +33,7 @@
 
                 <div class="block block-fcb block-style-1 col1">
                     <img class="block-image" src="img/fpo/fb.jpg"/>
-                    <div class="block-message">Egypt must wait longer for landmarks poll results</div>
+                    <div class="block-message">Egypt must wait longer for landmarks poll results <a href="#">http://reallyreallyreallylongurl.html</a></div>
                     <div class="block-rubric">Facebook</div>
                     <div class="block-timestamp">Tues, 11:14am</div>
                 </div>
@@ -84,7 +85,7 @@
         <script src="js/mylibs/mustache.js"></script>
         <script src="js/mylibs/jquery.masonry.js"></script>
         <script src="js/mylibs/jquery.fittext.js"></script>
-
+        <script src="js/mylibs/Hyphenator.js"></script>
         <!-- scripts concatenated and minified via build script -->
         <script defer src="js/plugins.js"></script>
         <script defer src="js/script.js"></script>
@@ -95,16 +96,28 @@
             // Initialize Masonry
             var $main = $('#main');
             $main.masonry({
+                itemSelector : '.block',
                 columnWidth: 254,
                 isFitWidth: true,
                 isAnimated: !Modernizr.csstransitions
             });
 
             //Initialize Fittext
-            $('.block-message').fitText();
+            $('.block-message').fitText(.2);
 
+            // Initialize Hyphenator
+            Hyphenator.config({
+                classname: 'block-message'
+            });
+            Hyphenator.run();
 
+            //Filters
+            $('[data-filter]').on('click', function(){
+                var filter = $(this).attr('data-filter');
 
+                $main.find('.' + filter).removeClass('block').addClass('hidden');
+                $main.masonry('reload');
+            });
         </script>
     </body>
 </html>
