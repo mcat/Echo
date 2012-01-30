@@ -11209,7 +11209,288 @@ Ronik.EchoStreamer = function(options) {
         ]
     };
 
-
+    var gaga4 = {
+        "id": "http://api.echoenabled.com/v1/search?q=childrenof:http://www.ladygaga.com/*%20((source:Twitter%20AND%20user.id:http://twitter.com/ladygaga)%20OR%20source:LadyGaga.com)%20provider:Arktan%20-state:ModeratorDeleted%20itemsPerPage:10%20%20safeHTML:off%20children:1%20((source:Twitter%20markers:twitter-reputation-high)%20OR%20(type:comment%20provider:jskit))%20-state:ModeratorDeleted,SystemFlagged,ModeratorFlagged,CommunityFlagged%20-user.state:ModeratorBanned%20childrenSortOrder:reverseChronological%20childrenItemsPerPage:2%20",
+        "updated": "2012-01-28T22:49:49Z",
+        "hasMoreChildren": "true",
+        "sortOrder": "reverseChronological",
+        "safeHTML": "off",
+        "itemsPerPage": "10",
+        "children": {
+            "maxDepth": "1",
+            "sortOrder": "reverseChronological",
+            "itemsPerPage": "2",
+            "filter": "((((source:\"Twitter\" AND markers:\"twitter-reputation-high\") OR (type:\"comment\" AND provider:\"jskit\")) AND -((state:\"ModeratorDeleted\" OR ((state:\"SystemFlagged\" OR state:\"ModeratorFlagged\") OR state:\"CommunityFlagged\")))) AND -user.state:\"ModeratorBanned\")"
+        },
+        "nextPageAfter": "1326763200.058354",
+        "nextSince": "1327791012.887373",
+        "liveUpdatesTimeout": "0",
+        "entries": [
+            {
+                "id": "http://js-kit.com/activities/post/foobarbaz",
+                "actor": {
+                    "links": [
+                        "http:///"
+                    ],
+                    "objectTypes": [
+                        "http://activitystrea.ms/schema/1.0/person"
+                    ],
+                    "id": "http://twitter.com/ladygaga",
+                    "title": "@LadyGaga",
+                    "status": "Untouched",
+                    "avatar": "http://a1.twimg.com/profile_images/1239447061/Unnamed-1_normal.jpg"
+                },
+                "object": {
+                    "id": "http://twitter.com/ladygaga/statuses/foobarbaz",
+                    "objectTypes": [
+                        "http://activitystrea.ms/schema/1.0/article"
+                    ],
+                    "title": "This is so AMAZING <a href=\"http://t.co/SkAsS3zK\" rel=\"nofollow\">http://t.co/SkAsS3zK</a> <a href=\"http://twitter.com/search?q=%23HairMusicVideo\" title=\"#HairMusicVideo\" class=\"tweet-url hashtag\" rel=\"nofollow\">#HairMusicVideo</a> you guys did such an amazing job for <a href=\"http://twitter.com/search?q=%23ItGetsBetter\" title=\"#ItGetsBetter\" class=\"tweet-url hashtag\" rel=\"nofollow\">#ItGetsBetter</a>. The Choreo! I died!",
+                    "permalink": "http://twitter.com/ladygaga/statuses/162998631119589376",
+                    "context": [
+                        {
+                            "uri": "http://ctv.ca/official/twitter"
+                        },
+                        {
+                            "uri": "http://youtube.com/watch?feature=player_embedded&v=ElvcAcg7yLA",
+                            "title": "Lady Gaga - #HairMusicVideo - It Gets Better"
+                        },
+                        {
+                            "uri": "http://ladygaga.com/official/twitter"
+                        }
+                    ],
+                    "content": "<div class=\"note_title\">This is so AMAZING <a href=\"http://t.co/SkAsS3zK\" data-resolved=\"http://www.youtube.com/watch?v=ElvcAcg7yLA&feature=player_embedded\" rel=\"nofollow\">http://t.co/SkAsS3zK</a> <a href=\"http://twitter.com/search?q=%23HairMusicVideo\" title=\"#HairMusicVideo\" class=\"tweet-url hashtag\" rel=\"nofollow\">#HairMusicVideo</a> you guys did such an amazing job for <a href=\"http://twitter.com/search?q=%23ItGetsBetter\" title=\"#ItGetsBetter\" class=\"tweet-url hashtag\" rel=\"nofollow\">#ItGetsBetter</a>. The Choreo! I died!</div><div class=\"metadata note_metadata twitter_metadata\"><div class=\"metadata_description_div\"><div class=\"metadata_description\"><div class=\"meta_video\"><iframe width=\"425\" height=\"355\" src=\"http://www.youtube.com/embed/ElvcAcg7yLA\" frameborder=\"0\" allowfullscreen></iframe></div></div></div></div>",
+                    "content_type": "text",
+                    "status": "Untouched",
+                    "markers": [
+                        "arktan-video"
+                    ],
+                    "tags": [
+                        "hairmusicvideo",
+                        "itgetsbetter"
+                    ],
+                    "likes": [
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=f459db57-264a-4396-8469-86e2b9986c76",
+                                "title": "AnaSilva14",
+                                "avatar": "http://graph.facebook.com/100002047966145/picture?type=normal"
+                            },
+                            "published": "2012-01-28T21:45:10Z"
+                        },
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=193824a7-8dd7-4db4-9b20-dfc1ce0da476",
+                                "title": "Haus_of_Frost",
+                                "avatar": "http://graph.facebook.com/1575250773/picture?type=normal"
+                            },
+                            "published": "2012-01-28T21:23:30Z"
+                        },
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=e7b29891-00a6-45fd-a5d2-62886f07514f",
+                                "title": "RonanBennett",
+                                "avatar": "http://graph.facebook.com/100000990593611/picture?type=normal"
+                            },
+                            "published": "2012-01-28T19:19:24Z"
+                        },
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=cad301f1-9367-4f39-996a-6e91ccae248b",
+                                "title": "BrianGanje",
+                                "avatar": "http://graph.facebook.com/1080275742/picture?type=normal"
+                            },
+                            "published": "2012-01-28T19:13:55Z"
+                        },
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=82c826cf-de97-4b77-940f-9968a9a3f567",
+                                "title": "Lucas Lima",
+                                "avatar": "http://graph.facebook.com/100002168348724/picture?type=normal"
+                            },
+                            "published": "2012-01-28T17:31:49Z"
+                        },
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=0662420a-fe09-4162-a68a-3cd1c78cb31e",
+                                "title": "GagaxLovee",
+                                "avatar": "https://d1lqe9temigv1p.cloudfront.net/img/a99394395f0d95fb292b5e2b929feec5d3885e71.jpg"
+                            },
+                            "published": "2012-01-28T13:26:30Z"
+                        },
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=8e9f83c2-0cd8-42af-92c1-60aaa82db04f",
+                                "title": "InesLittleMonsterHayouni",
+                                "avatar": "http://graph.facebook.com/100001456501478/picture?type=normal"
+                            },
+                            "published": "2012-01-28T12:55:50Z"
+                        },
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=b9313ba3-683c-4bcf-974f-4d1f2424f38e",
+                                "title": "Lady CoCo",
+                                "avatar": "https://d1lqe9temigv1p.cloudfront.net/img/01457b633d303da034d2963f5259e9eab01e86fc.jpg"
+                            },
+                            "published": "2012-01-28T11:07:27Z"
+                        },
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=0771a499-ba0c-4c70-abb0-5c6009846fb4",
+                                "title": "LisaJUlmer",
+                                "avatar": "http://graph.facebook.com/100002089004056/picture?type=normal"
+                            },
+                            "published": "2012-01-28T10:53:10Z"
+                        },
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=66da90f3-daa9-4dac-b692-5abd08ced8f8",
+                                "title": "IgorKlimenko"
+                            },
+                            "published": "2012-01-28T10:39:25Z"
+                        },
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=f7e438d3-10eb-44b7-bd0a-6520aca5b82e",
+                                "title": "HausOfYouAndMe",
+                                "avatar": "http://a2.twimg.com/profile_images/1499788146/finalwecollidetonight_reasonably_small_reasonably_small.jpg"
+                            },
+                            "published": "2012-01-28T10:31:59Z"
+                        },
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=56a84423-f46c-4264-bb51-9a03b6cdb62e",
+                                "title": "Little Monster's",
+                                "avatar": "https://d1lqe9temigv1p.cloudfront.net/img/273a4660b532b7ed743d7bbd8c4b3d3145b37f23.jpg"
+                            },
+                            "published": "2012-01-28T09:10:40Z"
+                        },
+                        {
+                            "actor": {
+                                "links": [
+                                    "http:///"
+                                ],
+                                "objectTypes": [
+                                    "http://activitystrea.ms/schema/1.0/person"
+                                ],
+                                "id": "https://umg.janraincapture.com/oauth/public_profile?uuid=47899135-6f70-4286-98fe-b9a4593da1fd",
+                                "title": "Adelina",
+                                "avatar": "http://graph.facebook.com/1313410676/picture?type=normal"
+                            },
+                            "published": "2012-01-28T08:00:24Z"
+                        }
+                    ],
+                    "published": "2012-01-27T20:41:16Z",
+                    "accumulators": {
+                        "repliesCount": "1506",
+                        "likesCount": "21"
+                    }
+                },
+                "source": {
+                    "name": "Twitter",
+                    "uri": "http://search.twitter.com/search?q=from%3Aladygaga",
+                    "icon": "http://cdn.js-kit.com/images/favicons/twitter.png"
+                },
+                "provider": {
+                    "name": "Arktan",
+                    "uri": "http://arktan.com/",
+                    "icon": "http://arktan.com/images/favicon.ico"
+                },
+                "verbs": [
+                    "http://activitystrea.ms/schema/1.0/post"
+                ],
+                "postedTime": "2012-01-27T20:41:16Z",
+                "targets": [
+                    {
+                        "id": "http://ctv.ca/official/twitter",
+                        "conversationID": "http://twitter.com/ladygaga/statuses/162998631119589376"
+                    },
+                    {
+                        "id": "http://youtube.com/watch?feature=player_embedded&v=ElvcAcg7yLA",
+                        "conversationID": "http://twitter.com/ladygaga/statuses/162998631119589376"
+                    },
+                    {
+                        "id": "http://ladygaga.com/official/twitter",
+                        "conversationID": "http://twitter.com/ladygaga/statuses/162998631119589376"
+                    }
+                ],
+                "pageAfter": "1327696876.059663",
+                "hasMoreChildren": "true"
+            }
+        ]
+    }
 
     return {
         start: function() {
@@ -11220,6 +11501,9 @@ Ronik.EchoStreamer = function(options) {
             setTimeout(function(){
                 $.publish(settings.topic, [gaga3]);
             }, 10000);
+            setTimeout(function(){
+                $.publish(settings.topic, [gaga4]);
+            }, 15000);
         }
     };
 };
