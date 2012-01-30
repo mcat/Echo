@@ -96,7 +96,7 @@
         <script>
 
             // Initialize Masonry
-            var $main = $('#main');
+            var $main = $('#main').css({visibility: "hidden"});
             $main.masonry({
                 itemSelector : '.block',
                 columnWidth: 254,
@@ -110,7 +110,18 @@
             });
 
             //Initialize Fittext
-            $('.block-message').fitText(.2);
+            //$('.block-message').fitText(.2);
+
+            $('.block-message').each(function(){
+                var $blockText = $(this);
+                var limit_w = $blockText.parent().width();
+                var current_w = $blockText.css('float','left').width();
+                var new_emsize = parseInt($blockText.css('fontSize')) * (limit_w / current_w);
+                $blockText.css({'fontSize':new_emsize+'px','float':'none'});
+            });
+
+            $main.css({visibility: "visible"});
+
 
             // Initialize Hyphenator
             Hyphenator.config({
