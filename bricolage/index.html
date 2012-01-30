@@ -99,7 +99,12 @@
                 itemSelector : '.block',
                 columnWidth: 254,
                 isFitWidth: true,
-                isAnimated: !Modernizr.csstransitions
+                isAnimated: !Modernizr.csstransitions,
+                animationOptions: {
+                    duration: 750,
+                    easing: 'linear',
+                    queue: false
+                }
             });
 
             //Initialize Fittext
@@ -109,7 +114,7 @@
             Hyphenator.config({
                 classname: 'block-message'
             });
-            Hyphenator.run();
+            //Hyphenator.run();
 
             //Filters
             $('[data-filter]').on('click', function(){
