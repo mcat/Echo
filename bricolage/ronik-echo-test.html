@@ -79,10 +79,7 @@
 </script>
 
 <script type="text/x-handlebars-template" id="genericTemplate">
-    <div class="block block-fcb block-style-1 col1">
-        {{#if bricolage }}
-        <img class="block-image" src="{{ bricolage.image.src }}"/>
-        {{/if}}
+    <div class="block block-fcb block-style-1 col1" style="{{#if bricolage }}background-image: url({{ bricolage.image.src }});{{/if}}">
         <div class="block-message">{{{ object.title }}}</div>
         <div class="block-rubric">{{ source.name }}</div>
         <div class="block-timestamp">{{ bricolage.displayDate }}</div>
