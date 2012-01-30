@@ -44,7 +44,14 @@ Ronik.Bricolage = function(options) {
 
     function handleEntries(entries) {
         var time = new Date().getTime();
-        var toPrepend = [], images = 0, imagesMeasured = 0;
+        var toPrepend = [], images = 0, imagesMeasured = 0, done = false;
+
+        var checkImages = function(){
+            if(done && images == imagesMeasured) {
+                prependEntries(toPrepend);
+                console.log("Displaying new entries took " + ((new Date().getTime() - time) / 1000) + " seconds");
+            }
+        };
 
         _.each(entries, function(entry){
             if(!posts[entry.object.id]) {
@@ -59,6 +66,7 @@ Ronik.Bricolage = function(options) {
                         entry.bricolage.image = image;
                     }
                     imagesMeasured += 1;
+                    checkImages();
                 });
 
 
@@ -80,20 +88,7 @@ Ronik.Bricolage = function(options) {
                 posts[entry.object.id] = entry;
             }
         });
-
-        var timeout = null;
-        var checkImages = function(){
-            if(images == imagesMeasured) {
-                clearTimeout(timeout);
-                timeout = null;
-                prependEntries(toPrepend);
-                console.log("Displaying new entries took " + ((new Date().getTime() - time) / 1000) + " seconds");
-            } else {
-                timeout= setTimeout(checkImages, 10);
-            }
-        };
-
-        timeout= setTimeout(checkImages, 10);
+        done = true;
     }
 
     function prependEntries(toPrepend) {
