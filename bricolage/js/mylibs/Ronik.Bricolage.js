@@ -1,22 +1,3 @@
-function measureImage(url, callback){
-     $("<img>")
-        .load(function(){
-             var $dummy = $(this);
-             var size = { src: url, width: $dummy.width(), height: $dummy.height() };
-             jQuery.isFunction(callback) && callback(size);
-             $dummy.remove();
-
-        })
-        .error(function(){
-            jQuery.isFunction(callback) && callback();
-            $(this).remove();
-        })
-        .css({ display:"none", width:"auto", height:"auto", minWidth:"auto", minHeight:"auto" })
-        .each(function(){ try{ $(this).css({ maxWidth:"auto", maxHeight:"auto" }) }catch(e){} })
-        .appendTo(document.body)    // The width/height would be zero if img is not added to DOM.
-        .attr({ src: url });
-}
-
 var Ronik = Ronik || {};
 Ronik.Bricolage = function(options) {
 
@@ -148,6 +129,25 @@ Ronik.Bricolage = function(options) {
         }
 
         return 0;
+    }
+
+    function measureImage(url, callback){
+        $("<img>")
+            .load(function(){
+                var $dummy = $(this);
+                var size = { src: url, width: $dummy.width(), height: $dummy.height() };
+                jQuery.isFunction(callback) && callback(size);
+                $dummy.remove();
+
+            })
+            .error(function(){
+                jQuery.isFunction(callback) && callback();
+                $(this).remove();
+            })
+            .css({ display:"none", width:"auto", height:"auto", minWidth:"auto", minHeight:"auto" })
+            .each(function(){ try{ $(this).css({ maxWidth:"auto", maxHeight:"auto" }) }catch(e){} })
+            .appendTo(document.body)    // The width/height would be zero if img is not added to DOM.
+            .attr({ src: url });
     }
 
 
