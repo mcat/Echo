@@ -251,10 +251,15 @@ body {
     margin: 0 10px;
 }
 
+.navigation a {
+    cursor: pointer;
+}
+
 #main {
     clear: both;
     background: #000;
     margin: 0 auto;
+    width: 1016px;
 }
 
 .col1 {

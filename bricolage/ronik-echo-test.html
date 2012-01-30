@@ -14,15 +14,6 @@
     <div class="container">
         <header>
             <h1 class="logo">Social News</h1>
-            <nav class="navigation">
-                <ul>
-                    <li>All</li>
-                    <li>Facebook</li>
-                    <li>Tweets</li>
-                    <li>Video</li>
-                    <li>Photo</li>
-                </ul>
-            </nav>
         </header>
         <div id="main" role="main">
 
@@ -48,6 +39,7 @@
 <script src="js/mylibs/underscore.js"></script>
 <script src="js/mylibs/jquery.ba-tinypubsub.min.js"></script>
 <script src="js/mylibs/Ronik.Bricolage.js"></script>
+<script src="js/mylibs/Ronik.QuerySwitcher.js"></script>
 <script src="js/mylibs/gaga.js"></script>
 <script>
     var topic = "/echo/search";
@@ -60,6 +52,8 @@
             query: "childrenof:ronikdesign.com/test.html sortOrder:chronological",
             topic: topic
         }).start();
+
+        Ronik.QuerySwitcher.init();
 
     });
 </script>
@@ -98,7 +92,7 @@
     <nav class="navigation">
         <ul>
             {{#each filter}}
-            <li><a data-filter="{{filter.query}}">{{filter.title}}</a></li>
+            <li><a data-filter="{{query}}">{{title}}</a></li>
             {{/each}}
         </ul>
     </nav>
