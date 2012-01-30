@@ -419,6 +419,65 @@ body {
 @media only screen and (min-width: 480px) {
   /* Style adjustments for viewports 480px and over go here */
 
+    body {
+        width: 508px;
+    }
+
+    #page {
+        background: #000;
+        width: 508px;
+        margin: 0 auto;
+        position: relative;
+    }
+    .container {
+        width: 508px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+
+    .container header {
+        position: relative;
+        overflow: hidden;
+        margin: 10px auto;
+        width: 508px;
+    }
+
+    .logo {
+        display: block;
+        color: #fff;
+        font: bold 36px/1 "Verdana", sans-serif;
+        float: none;
+        margin: 0;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .navigation {
+        display: block;
+        color: #fff;
+        float: none;
+        font: bold 16px/1 "Verdana", sans-serif;
+        text-transform: uppercase;
+        position: relative;
+        bottom: auto;
+        right: auto;
+        margin: 10px 0;
+        text-align: center;
+    }
+    
+    .navigation li {
+        float: none;
+        display: inline-block;
+    }
+
+    #main {
+        clear: both;
+        background: #000;
+        margin: 0 auto;
+        width: 1016px;
+    }
+
 }
 
 @media only screen and (min-width: 768px) {
