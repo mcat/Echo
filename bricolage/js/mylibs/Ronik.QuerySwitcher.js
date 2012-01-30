@@ -41,7 +41,7 @@ Ronik.QuerySwitcher = (function(options){
     function bindEvents(){
         $('[data-filter]').on('click', function(){
             var query = $(this).attr('data-filter');
-            $.publish("/ronik/echo/search", [query]);
+            $.publish("/ronik/echo/switchSearch", [query]);
         });
     }
 
