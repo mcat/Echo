@@ -210,7 +210,7 @@ body {
 }
 
 .container {
-    width: 1020px;
+    width: 1016px;
     margin: 0 auto;
 }
 
@@ -236,11 +236,11 @@ body {
 }
 
 .col1 {
-    width: 254px;
+    width: 252px;
 }
 
 .col2 {
-    width: 508px;
+    width: 506px;
 }
 
 .block {
@@ -250,6 +250,7 @@ body {
     background-position: 50% 50%;
     background-size: cover;
     background-color: #000;
+    margin: 1px;
 }
 
 .hidden {
