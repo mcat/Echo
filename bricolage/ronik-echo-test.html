@@ -10,25 +10,27 @@
 </head>
 
 <body>
-<div class="container">
-    <header>
-        <h1 class="logo">Social News</h1>
-        <nav class="navigation">
-            <ul>
-                <li>All</li>
-                <li>Facebook</li>
-                <li>Tweets</li>
-                <li>Video</li>
-                <li>Photo</li>
-            </ul>
-        </nav>
-    </header>
-    <div id="main" role="main">
+<div id="page">
+    <div class="container">
+        <header>
+            <h1 class="logo">Social News</h1>
+            <nav class="navigation">
+                <ul>
+                    <li>All</li>
+                    <li>Facebook</li>
+                    <li>Tweets</li>
+                    <li>Video</li>
+                    <li>Photo</li>
+                </ul>
+            </nav>
+        </header>
+        <div id="main" role="main">
 
+        </div>
+        <footer>
+
+        </footer>
     </div>
-    <footer>
-
-    </footer>
 </div>
 <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -36,7 +38,7 @@
 
 <script src="js/mylibs/handlebars-1.0.0.beta.6.js"></script>
 <script src="js/mylibs/jquery.masonry.js"></script>
-<script src="js/mylibs/jquery.fittext.js"></script>
+<script src="js/mylibs/jquery.textfill.js"></script>
 <script src="js/mylibs/date-en-US.js"></script>
 
 <!-- scripts concatenated and minified via build script -->
@@ -74,7 +76,7 @@
     });
 
     //Initialize Fittext
-    $('.block-message').fitText();
+    //$('.block-message').fitText();
 
 </script>
 

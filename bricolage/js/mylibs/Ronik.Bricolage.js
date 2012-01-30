@@ -57,7 +57,11 @@ Ronik.Bricolage = function(options) {
                     //posts[parentId].append($element);
                 } else {
                     $("#main").prepend($element).masonry('reload');
-                    $element.find('.block-message').fitText();
+                    $element.textfill({
+                        maxFontPixels: 36,
+                        innerTag: '.block-message'
+                    });
+
                 }
             }
         });
