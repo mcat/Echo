@@ -209,9 +209,14 @@ body {
     background: #000;
 }
 
-.container {
+#page {
     background: #000 url("../img/fpo/bg.jpg") repeat-x;
     width: 1258px;
+    margin: 0 auto;
+    position: relative;
+}
+.container {
+    width: 1016px;
     margin: 0 auto;
     position: relative;
 }
