@@ -21,27 +21,14 @@ Ronik.QuerySwitcher = (function(options){
 
     function buildFilter(filters) {
         template = Handlebars.compile($(settings.renderTemplate).html());
-        var html = template({filter: [
-                    {
-                        title: "All",
-                        query: "childrenof:ronikdesign.com/test.html sortOrder:chronological"
-                    },
-                    {
-                        title: "Facebook",
-                        query: "childrenof:ronikdesign.com/test.html sortOrder:chronological"
-                    },
-                    {
-                        title: "Twitter",
-                        query: "childrenof:ronikdesign.com/test.html sortOrder:chronological"
-                    }
-                ]});
+        var html = template(filters);
         $('#page header').append(html);
     }
 
     function bindEvents(){
         $('[data-filter]').on('click', function(){
             var query = $(this).attr('data-filter');
-            $.publish("/ronik/echo/search", [query]);
+            $.publish("/ronik/echo/switchSearch", [query]);
         });
     }
 

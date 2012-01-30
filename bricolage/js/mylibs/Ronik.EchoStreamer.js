@@ -12,6 +12,9 @@ Ronik.EchoStreamer = function(options) {
     var timeoutId = null;
     var since = null;
 
+    $.subscribe("/ronik/echo/switchSearch", function(e, query){
+        settings.query = query;
+    });
 
     function doSearch() {
         var data = {
