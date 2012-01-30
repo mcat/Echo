@@ -1,14 +1,15 @@
 function measureImage(url, callback){
-    var $dummy = $("<img>")
+     $("<img>")
         .load(function(){
-            var size = { src: url, width: $dummy.width(), height: $dummy.height() };
-            jQuery.isFunction(callback) && callback(size);
-            $dummy.remove();
+             var $dummy = $(this);
+             var size = { src: url, width: $dummy.width(), height: $dummy.height() };
+             jQuery.isFunction(callback) && callback(size);
+             $dummy.remove();
 
         })
         .error(function(){
             jQuery.isFunction(callback) && callback();
-            $dummy.remove();
+            $(this).remove();
         })
         .css({ display:"none", width:"auto", height:"auto", minWidth:"auto", minHeight:"auto" })
         .each(function(){ try{ $(this).css({ maxWidth:"auto", maxHeight:"auto" }) }catch(e){} })
