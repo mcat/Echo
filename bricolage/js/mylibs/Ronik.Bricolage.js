@@ -26,7 +26,7 @@ Ronik.Bricolage = function(options) {
     function handleEntries(entries) {
         var time = new Date().getTime();
         $.each(entries, function(){
-
+            console.log(this);
             if(!posts[this.object.id]) {
                 this.bricolage = { type: "generic" };
                 var $content = $('<div>' + this.object.content + '</div>');
@@ -129,8 +129,13 @@ Ronik.GenericRenderer = function() {
         init: function() {
             template = Handlebars.compile($("#genericTemplate").html());
         },
-        render: function(post){
-            return template ? template(post) : "";
+        render: function(entry){
+            entry.bricolage.styles = "block block-fcb block-style-1";
+
+            var text = $('<div>' + entry.object.title + '</div>').text();
+            entry.bricolage.styles += text.length > 150 ? " col2" : " col1";
+
+            return template ? template(entry) : "";
         }
     };
 };
@@ -142,8 +147,8 @@ Ronik.VideoRenderer = function() {
         init: function() {
             template = Handlebars.compile($("#videoTemplate").html());
         },
-        render: function(post){
-            return template ? template(post) : "";
+        render: function(entry){
+            return template ? template(entry) : "";
         }
     };
 };
