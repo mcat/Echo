@@ -170,7 +170,7 @@ Ronik.Bricolage = function(options) {
         if($video.length != 0) {
             $video.attr({width: "100%", height: "100%"});
 
-            return { html: $video.prop("outerHTML") };
+            return { html: $video.wrap("<div>").parent().html() };
         }
 
         return null;
