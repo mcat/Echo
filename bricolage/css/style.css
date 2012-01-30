@@ -210,19 +210,35 @@ body {
 }
 
 .container {
-    width: 1016px;
+    background: #000 url("../img/fpo/bg.jpg") repeat-x;
+    width: 1258px;
     margin: 0 auto;
+    position: relative;
+}
+
+.container header {
+    position: relative;
+    overflow: hidden;
+    margin: 10px auto;
+    width: 1016px;
 }
 
 .logo {
     color: #fff;
     font: bold 57px "Verdana", sans-serif;
     float: left;
+    margin: 0;
+    text-transform: uppercase;
 }
 
 .navigation {
     color: #fff;
     float: right;
+    font: bold 16px/1 "Verdana", sans-serif;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
 }
 
 .navigation li {
@@ -233,6 +249,7 @@ body {
 #main {
     clear: both;
     background: #000;
+    margin: 0 auto;
 }
 
 .col1 {
