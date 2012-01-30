@@ -1,3 +1,21 @@
+function measureImage(url, callback){
+    var $dummy = $("<img>")
+        .load(function(){
+            var size = { src: url, width: $dummy.width(), height: $dummy.height() };
+            jQuery.isFunction(callback) && callback(size);
+            $dummy.remove();
+
+        })
+        .error(function(){
+            jQuery.isFunction(callback) && callback();
+            $dummy.remove();
+        })
+        .css({ display:"none", width:"auto", height:"auto", minWidth:"auto", minHeight:"auto" })
+        .each(function(){ try{ $(this).css({ maxWidth:"auto", maxHeight:"auto" }) }catch(e){} })
+        .appendTo(document.body)    // The width/height would be zero if img is not added to DOM.
+        .attr({ src: url });
+}
+
 var Ronik = Ronik || {};
 Ronik.Bricolage = function(options) {
 
@@ -25,47 +43,68 @@ Ronik.Bricolage = function(options) {
 
     function handleEntries(entries) {
         var time = new Date().getTime();
-        $.each(entries, function(){
-            if(!posts[this.object.id]) {
-                this.bricolage = { type: "generic" };
-                var $content = $('<div>' + this.object.content + '</div>');
+        var toPrepend = [], images = 0, imagesMeasured = 0;
 
+        _.each(entries, function(entry){
+            if(!posts[entry.object.id]) {
+                entry.bricolage = { type: "generic" };
+                var $content = $('<div>' + entry.object.content + '</div>');
 
-                this.bricolage.displayDate = parseDate(this.object.published).toString("ddd h:mm tt");
+                entry.bricolage.displayDate = parseDate(entry.object.published).toString("MM/dd/yyyy h:mm tt");
 
                 //Check to see if we have a video
-                var image = getImage($content);
-                if(image) {
-                    this.bricolage.image = image;
-                }
+                images += processImage($content, function(image){
+                    if(image) {
+                        entry.bricolage.image = image;
+                    }
+                    imagesMeasured += 1;
+                });
+
 
                 //Check to see if we have a video
                 var video = getVideo($content);
                 if(video) {
-                    this.bricolage.video = video;
-                    this.bricolage.type = "video";
+                    entry.bricolage.video = video;
+                    entry.bricolage.type = "video";
                 }
 
                 // Render the entry
-                var $element = render(this);
-
-                posts[this.object.id] = $element;
-
-                var parentId = this.targets[0].id;
+                var parentId = entry.targets[0].id;
                 if(posts[parentId]) {
-                    //posts[parentId].append($element);
+                    //handle children
                 } else {
-                    console.log(this);
-                    $("#main").prepend($element).masonry('reload');
-                    $element.textfill({
-                        maxFontPixels: 36,
-                        innerTag: '.block-message'
-                    });
-
+                    toPrepend.unshift(entry);
                 }
+
+                posts[entry.object.id] = entry;
             }
         });
-        console.log((new Date().getTime() - time) / 1000);
+
+        var timeout = null;
+        var checkImages = function(){
+            if(images == imagesMeasured) {
+                clearTimeout(timeout);
+                timeout = null;
+                prependEntries(toPrepend);
+                console.log("Displaying new entries took " + ((new Date().getTime() - time) / 1000) + " seconds");
+            } else {
+                timeout= setTimeout(checkImages, 10);
+            }
+        };
+
+        timeout= setTimeout(checkImages, 10);
+    }
+
+    function prependEntries(toPrepend) {
+        _.each(toPrepend, function(entry) {
+            var $entry = render(entry);
+            $("#main").prepend($entry);
+            $entry.textfill({
+                maxFontPixels: 36,
+                innerTag: '.block-message'
+            });
+        });
+        $("#main").masonry('reload');
     }
 
     function render(entry) {
@@ -97,26 +136,40 @@ Ronik.Bricolage = function(options) {
             matches[4], matches[5], matches[6]));
     }
 
-    function getImage($content) {
+    function processImage($content, callback) {
         var $image = $content.find(".metadata_image");
         if($image.length != 0) {
             var src = $image.data("src-full");
             if(!src) {
                 src = $image.attr("src");
             }
-            return { html: $image.html(), src: src };
+            if(src) {
+                setTimeout(function(){
+                    measureImage(src, callback);
+                }, 1);
+                return 1;
+            }
         }
 
-        return null;
+        return 0;
     }
 
 
     function getVideo($content) {
+        // videos extracted from twitter
         var $video = $content.find(".meta_video");
         if($video.length != 0) {
             $video.find("iframe").attr({width: "100%", height: "100%"});
 
             return { html: $video.html() };
+        }
+
+        // videos coming from youtube
+        $video = $content.find(".youtubeEmbed");
+        if($video.length != 0) {
+            $video.attr({width: "100%", height: "100%"});
+
+            return { html: $video.prop("outerHTML") };
         }
 
         return null;
@@ -139,9 +192,18 @@ Ronik.GenericRenderer = function() {
         render: function(entry){
             var styles = "block block-style-1";
 
+            var wide =  false;
             // Add width style
             var text = $('<div>' + entry.object.title + '</div>').text();
-            styles += " "  + (text.length > 150 ? "col2" : "col1");
+            if(text.length > 150) {
+                wide = true;
+            }
+
+            if(entry.bricolage.image && entry.bricolage.image.width > 252) {
+                wide = true;
+            }
+
+            styles += " "  + (wide ? "col2" : "col1");
 
             // Add provider style
             var source = entry.source.name.toLowerCase();

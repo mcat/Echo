@@ -39,8 +39,8 @@
 <script src="js/mylibs/underscore.js"></script>
 <script src="js/mylibs/jquery.ba-tinypubsub.min.js"></script>
 <script src="js/mylibs/Ronik.Bricolage.js"></script>
+<script src="js/mylibs/Ronik.EchoStreamer.js"></script>
 <script src="js/mylibs/Ronik.QuerySwitcher.js"></script>
-<script src="js/mylibs/gaga.js"></script>
 <script>
     var topic = "/echo/search";
 
@@ -49,7 +49,7 @@
         new Ronik.Bricolage({ topic: topic }).start();
 
         new Ronik.EchoStreamer({
-            query: "childrenof:ronikdesign.com/test.html sortOrder:chronological",
+            query: "((childrenof:http://www.ronikdesign.com/id_Test -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:20",
             topic: topic
         }).start();
 
