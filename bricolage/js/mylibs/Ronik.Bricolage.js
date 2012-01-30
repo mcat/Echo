@@ -65,7 +65,7 @@ Ronik.Bricolage = function(options) {
     }
 
     function render(entry) {
-        var $element = null, renderer = getRenderer(entry.bricolage.type, entry.provider.name);
+        var $element = null, renderer = getRenderer(entry.bricolage.type, entry.source.name);
 
         if(renderer) {
             $element = $(renderer.render(entry));
@@ -74,8 +74,8 @@ Ronik.Bricolage = function(options) {
         return $element;
     }
 
-    function getRenderer(type, provider) {
-        var firstChoice =  type + provider, renderer = null;
+    function getRenderer(type, source) {
+        var firstChoice =  type + "_" + source.toLowerCase(), renderer = null;
         if(settings.renderers[firstChoice]) {
             renderer = settings.renderers[firstChoice];
         } else if(settings.renderers[type]) {
@@ -130,10 +130,17 @@ Ronik.GenericRenderer = function() {
             template = Handlebars.compile($("#genericTemplate").html());
         },
         render: function(entry){
-            entry.bricolage.styles = "block block-fcb block-style-1";
+            var styles = "block block-style-1";
 
+            // Add width style
             var text = $('<div>' + entry.object.title + '</div>').text();
-            entry.bricolage.styles += text.length > 150 ? " col2" : " col1";
+            styles += " "  + (text.length > 150 ? "col2" : "col1");
+
+            // Add provider style
+            var source = entry.source.name.toLowerCase();
+            styles += " source-" + source;
+
+            entry.bricolage.styles = styles;
 
             return template ? template(entry) : "";
         }
