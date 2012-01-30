@@ -26,7 +26,6 @@ Ronik.Bricolage = function(options) {
     function handleEntries(entries) {
         var time = new Date().getTime();
         $.each(entries, function(){
-            console.log(this);
             if(!posts[this.object.id]) {
                 this.bricolage = { type: "generic" };
                 var $content = $('<div>' + this.object.content + '</div>');
@@ -56,6 +55,7 @@ Ronik.Bricolage = function(options) {
                 if(posts[parentId]) {
                     //posts[parentId].append($element);
                 } else {
+                    console.log(this);
                     $("#main").prepend($element).masonry('reload');
                     $element.textfill({
                         maxFontPixels: 36,
@@ -98,10 +98,13 @@ Ronik.Bricolage = function(options) {
     }
 
     function getImage($content) {
-        var $image = $content.find("[data-src-full]");
+        var $image = $content.find(".metadata_image");
         if($image.length != 0) {
-
-            return { html: $image.html(), src: $image.data("src-full") };
+            var src = $image.data("src-full");
+            if(!src) {
+                src = $image.attr("src");
+            }
+            return { html: $image.html(), src: src };
         }
 
         return null;
