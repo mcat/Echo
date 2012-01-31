@@ -9,7 +9,7 @@ Ronik.QuerySwitcher = (function(options){
             },
             {
                 title: "Facebook",
-                query: "childrenof:ronikdesign.com/test.html sortOrder:chronological"
+                query: "((childrenof:http://www.ronikdesign.com/id_twitter -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:8"
             },
             {
                 title: "Twitter",

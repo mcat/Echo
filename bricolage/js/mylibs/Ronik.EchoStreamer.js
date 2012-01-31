@@ -12,7 +12,10 @@ Ronik.EchoStreamer = function(options) {
     var timeoutId = null;
     var since = null;
 
+    var dump = false;
+
     $.subscribe("/ronik/echo/switchSearch", function(e, query){
+        dump = true;
         settings.query = query;
     });
 
@@ -36,7 +39,8 @@ Ronik.EchoStreamer = function(options) {
 
                 //only publish an event when there is new content
                 if(data.entries.length != 0) {
-                    $.publish(settings.topic, [data]);
+                    $.publish(settings.topic, [data, dump]);
+                    dump = false;
                 }
             }
 

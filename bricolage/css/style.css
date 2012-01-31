@@ -252,6 +252,7 @@ body {
 }
 
 #main {
+    background: #000;
     clear: both;
     margin: 0 auto;
     width: 1016px;
@@ -274,6 +275,73 @@ body {
     background-color: #000;
     margin: 1px;
     overflow: hidden;
+
+    /* Flip */
+    -webkit-perspective: 1000;
+    position: relative;
+}
+
+.block-card {
+    position: relative;
+    /* Flip */
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: 0.5s;
+    height: 100%;
+    width: 100%;
+}
+
+/* Flip */
+.block:hover .block-card {
+    -webkit-transform: rotateY(180deg);
+}
+
+/* Flip */
+.block-card-front {
+    z-index: 10;
+}
+
+/* Flip */
+.block:hover .front {
+    z-index: 0;
+}
+
+/* Flip */
+.block-card-back {
+    -webkit-transform: rotateY(180deg);
+    display: block;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 30px 20px 20px 12px;
+}
+
+/* Flip */
+.block-card-back,
+.block-card-front {
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+}
+
+.block-thread {
+    overflow: scroll;
+    height: 100%;
+    padding: 0 20px 0 12px;
+}
+
+.block-thread-heading {
+    position: absolute;
+    top: 25px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.block-thread-author {
+
+}
+
+.block-thread-message {
+    margin: 0 0 15px 20px;
 }
 
 .hidden {
@@ -320,7 +388,8 @@ body {
     background-image: linear-gradient(top,  rgba(56,56,56,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#383838', endColorstr='#000000',GradientType=0 ); /* IE6-8 */
     background-repeat: no-repeat;
-    background-position: right bottom;
+    background-position: 90% 90%;
+    background-size: auto;
 }
 
 .source-twitter .block-rubric {

@@ -22,7 +22,8 @@ Ronik.Bricolage = function(options) {
            renderer.init();
        });
 
-        $.subscribe(settings.topic, function(event, data){
+        $.subscribe(settings.topic, function(event, data, dump){
+            console.log(dump);
             handleEntries(data.entries);
         });
     }
