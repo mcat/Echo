@@ -51,9 +51,9 @@ body, button, input, select, textarea { font-family: sans-serif; color: #222; }
    Links
    ========================================================================== */
 
-a { color: #666; text-decoration: none; }
-a:visited { color: #666; }
-a:hover { color: #666; text-decoration: underline; }
+a { color: #f1f1f1; text-decoration: none; }
+a:visited { color: #cccccc; }
+a:hover { color: #ccc; text-decoration: none; }
 a:focus { outline: thin dotted; }
 
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
