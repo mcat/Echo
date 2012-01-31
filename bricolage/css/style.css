@@ -206,15 +206,10 @@ td { vertical-align: top; }
    Author:
    ========================================================================== */
 body {
-    background: #000;
+    font-family: "Verdana", Arial, sans-serif;
+    background: #000 url("../img/fpo/bg.jpg");
 }
 
-#page {
-    background: #000 url("../img/fpo/bg.jpg") repeat-x;
-    width: 1258px;
-    margin: 0 auto;
-    position: relative;
-}
 .container {
     width: 1016px;
     margin: 0 auto;
@@ -252,12 +247,12 @@ body {
 }
 
 .navigation a {
+    color: #fff;
     cursor: pointer;
 }
 
 #main {
     clear: both;
-    background: #000;
     margin: 0 auto;
     width: 1016px;
 }
@@ -286,10 +281,14 @@ body {
 }
 
 .block-rubric {
+    font-size: 18px;
+    font-weight: bold;
     z-index: 10;
 }
 
 .block-timestamp {
+    font-size: 10px;
+    font-weight: bold;
     z-index: 10;
 }
 
@@ -312,20 +311,24 @@ body {
 .source-twitter {
     background: rgb(56,56,56); /* Old browsers */
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */
-    background: url("../img/big-quote.png"), url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzM4MzgzOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-    background: url("../img/big-quote.png"), -moz-linear-gradient(top,  rgba(56,56,56,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
-    background: url("../img/big-quote.png"), -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(56,56,56,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
-    background: url("../img/big-quote.png"), -webkit-linear-gradient(top,  rgba(56,56,56,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
-    background: url("../img/big-quote.png"), -o-linear-gradient(top,  rgba(56,56,56,1) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  rgba(56,56,56,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
-    background: linear-gradient(top,  rgba(56,56,56,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
+    background-image: url("../img/big-quote.png"), url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzM4MzgzOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background-image: url("../img/big-quote.png"), -moz-linear-gradient(top,  rgba(56,56,56,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+    background-image: url("../img/big-quote.png"), -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(56,56,56,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+    background-image: url("../img/big-quote.png"), -webkit-linear-gradient(top,  rgba(56,56,56,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+    background-image: url("../img/big-quote.png"), -o-linear-gradient(top,  rgba(56,56,56,1) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+    background-image: -ms-linear-gradient(top,  rgba(56,56,56,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
+    background-image: linear-gradient(top,  rgba(56,56,56,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#383838', endColorstr='#000000',GradientType=0 ); /* IE6-8 */
     background-repeat: no-repeat;
     background-position: right bottom;
 }
 
+.source-twitter .block-rubric {
+    text-transform: lowercase;
+}
+
 .source-facebook:before {
-    background: rgba(56, 88, 163, 0.8);
+    background: rgba(56, 88, 163, 0.75);
     content: " ";
     display: block;
     position: absolute;
@@ -346,12 +349,12 @@ body {
 .block-style-1 .block-timestamp,
 .block-style-2 .block-timestamp {
     position: absolute;
-    top: 20px;
+    top: 25px;
     right: 10px;
 }
 
 .block-style-1 .block-message {
-    padding: 40px 36px 0 12px;
+    padding: 50px 36px 30px 12px;
 }
 
 .block-style-2 .block-message {
