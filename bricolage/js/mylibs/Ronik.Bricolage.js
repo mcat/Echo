@@ -70,6 +70,7 @@ Ronik.Bricolage = function(options) {
             }
         });
         done = true;
+        checkImages();
     }
 
     function prependEntries(toPrepend) {

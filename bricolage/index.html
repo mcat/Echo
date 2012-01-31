@@ -11,19 +11,14 @@
 </head>
 
 <body>
-<div id="page">
     <div class="container">
-        <header>
+        <header id="pageHeader">
             <h1 class="logo">Social News</h1>
         </header>
         <div id="main" role="main">
 
         </div>
-        <footer>
-
-        </footer>
     </div>
-</div>
 <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
@@ -50,7 +45,7 @@
         new Ronik.Bricolage({ topic: topic }).start();
 
         new Ronik.EchoStreamer({
-            query: "((childrenof:http://www.ronikdesign.com/id_Test -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:20",
+            query: "((childrenof:http://www.ronikdesign.com/id_Test -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:8",
             topic: topic
         }).start();
 
@@ -76,7 +71,7 @@
 </script>
 
 <script type="text/x-handlebars-template" id="genericTemplate">
-    <div class="{{ bricolage.styles }}" style="{{#if bricolage.image }}background-image: url({{ bricolage.image.src }});{{/if}}">
+    <div class="{{ bricolage.styles }}" style="{{#if bricolage.image }}text-shadow: 0 0 3px #333; background-size: cover; background-position: 50% 50%; background-image: url({{ bricolage.image.src }});{{/if}}">
         <div class="block-message">{{{ object.title }}}</div>
         <div class="block-rubric">{{ source.name }}</div>
         <div class="block-timestamp">{{ bricolage.displayDate }}</div>
@@ -98,5 +93,6 @@
         </ul>
     </nav>
 </script>
+
 </body>
 </html>

@@ -22,7 +22,7 @@ Ronik.QuerySwitcher = (function(options){
     function buildFilter(filters) {
         template = Handlebars.compile($(settings.renderTemplate).html());
         var html = template(filters);
-        $('#page header').append(html);
+        $('#pageHeader').append(html);
     }
 
     function bindEvents(){
