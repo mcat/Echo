@@ -309,8 +309,6 @@ body {
 .block-card-back {
     -webkit-transform: rotateY(180deg);
     display: block;
-    height: 100%;
-    width: 100%;
     box-sizing: border-box;
     padding: 30px 20px 20px 12px;
 }
@@ -320,6 +318,8 @@ body {
 .block-card-front {
     position: absolute;
     -webkit-backface-visibility: hidden;
+    height: 100%;
+    width: 100%;
 }
 
 .block-thread {
