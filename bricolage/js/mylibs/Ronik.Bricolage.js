@@ -45,7 +45,7 @@ Ronik.Bricolage = function(options) {
                 var $content = $('<div>' + entry.object.content + '</div>');
 
                 entry.bricolage.source = entry.source.name.toLowerCase();
-                entry.bricolage.displayDate = parseDate(entry.object.published).toString("MM/dd/yyyy h:mm tt");
+                entry.bricolage.displayDate = parseDate(entry.object.published).toString("MMM d h:mm tt");
 
                 //Check to see if we have a video
                 images += processImage(entry.bricolage.source, $content, function(image){
