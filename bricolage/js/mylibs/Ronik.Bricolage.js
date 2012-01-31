@@ -212,7 +212,7 @@ Ronik.FacebookImageParser.prototype.parse = function($content) {
     var src = null;
     var $image = $content.find(".metadata_image");
     if($image.length != 0) {
-        src = decodeURIComponent($image.attr("src").replace(/.*url=(.*)&?.*/, "$1"));
+        src = decodeURIComponent($image.attr("src").replace(/http:\/\/external.ak.fbcdn.net\/safe_image.php.*url=(.*)&?.*/, "$1"));
     }
 
     return src;
@@ -251,8 +251,14 @@ Ronik.GenericRenderer = function() {
                 wide = true;
             }
 
-            if(entry.bricolage.image && entry.bricolage.image.width > 252) {
-                wide = true;
+            if(entry.bricolage.image) {
+                var imageWidth = entry.bricolage.image.width;
+                if(imageWidth > 252) {
+                    wide = true;
+                } else if(imageWidth < 200) {
+                    // don't show shitty images
+                    delete entry.bricolage.image;
+                }
             }
 
             // Add width style
