@@ -22,7 +22,11 @@ Ronik.Bricolage = function(options) {
            renderer.init();
        });
 
-        $.subscribe(settings.topic, function(event, data){
+        $.subscribe(settings.topic, function(event, data, dump){
+            if (dump) {
+                posts = {};
+                $('#main').empty();
+            }
             handleEntries(data.entries);
         });
     }
@@ -187,6 +191,12 @@ Ronik.Bricolage = function(options) {
 
         return null;
     }
+
+    $(window).scroll(function(){
+        if($(window).height() - $(this).scrollTop()  < 300){
+
+        }
+    });
 
 
     return {

@@ -12,8 +12,13 @@ Ronik.EchoStreamer = function(options) {
     var timeoutId = null;
     var since = null;
 
+    var dump = false;
+
     $.subscribe("/ronik/echo/switchSearch", function(e, query){
+        dump = true;
         settings.query = query;
+        pause();
+        doSearch();
     });
 
     function doSearch() {
@@ -22,7 +27,7 @@ Ronik.EchoStreamer = function(options) {
             q: settings.query
         };
 
-        if(since) {
+        if(!dump && since) {
             data.since = since;
         }
 
@@ -30,13 +35,18 @@ Ronik.EchoStreamer = function(options) {
             dataType: "jsonp",
             data: data,
             success: function(data) {
-                since = data.nextSince;
+                if(since && dump) {
+                    since = null;
+                } else {
+                    since = data.nextSince;
+                }
 
                 timeoutId = setTimeout(doSearch, settings.interval);
 
                 //only publish an event when there is new content
                 if(data.entries.length != 0) {
-                    $.publish(settings.topic, [data]);
+                    $.publish(settings.topic, [data, dump]);
+                    dump = false;
                 }
             }
 

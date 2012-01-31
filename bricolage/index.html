@@ -18,6 +18,9 @@
         <div id="main" role="main">
 
         </div>
+        <footer>
+            <img src="img/loader.gif" width="100" height="100"/>
+        </footer>
     </div>
 <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -45,7 +48,7 @@
         new Ronik.Bricolage({ topic: topic }).start();
 
         new Ronik.EchoStreamer({
-            query: "((childrenof:http://www.ronikdesign.com/id_Test -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:8",
+            query: "((childrenof:http://www.ronikdesign.com/id_Test -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:8", //((childrenof:http://www.ronikdesign.com/~mark/echo/bricolage/input.html))
             topic: topic
         }).start();
 
@@ -72,9 +75,26 @@
 
 <script type="text/x-handlebars-template" id="genericTemplate">
     <div class="{{ bricolage.styles }}" style="{{#if bricolage.image }}text-shadow: 0 0 3px #333; background-size: cover; background-position: 50% 50%; background-image: url({{ bricolage.image.src }});{{/if}}">
-        <div class="block-message">{{{ object.title }}}</div>
-        <div class="block-rubric">{{ source.name }}</div>
-        <div class="block-timestamp">{{ bricolage.displayDate }}</div>
+        <div class="block-card">
+            <div class="block-card-front">
+                <div class="block-message">{{{ object.title }}}</div>
+                <div class="block-rubric">{{ source.name }}</div>
+                <div class="block-timestamp">{{ bricolage.displayDate }}</div>
+            </div>
+            <div class="block-card-back">
+                <div class="block-thread-heading">Reactions</div>
+                <dl class="block-thread">
+                    <dt class="block-thread-author">Author Name</dt>
+                    <dd class="block-thread-message">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</dd>
+
+                    <dt class="block-thread-author">Author Name</dt>
+                    <dd class="block-thread-message">Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</dd>
+
+                    <dt class="block-thread-author">Author Name</dt>
+                    <dd class="block-thread-message">Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu. Cras consequat.</dd>
+                </dl>
+            </div>
+        </div>
     </div>
 </script>
 
