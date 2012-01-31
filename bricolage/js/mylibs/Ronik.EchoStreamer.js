@@ -17,6 +17,8 @@ Ronik.EchoStreamer = function(options) {
     $.subscribe("/ronik/echo/switchSearch", function(e, query){
         dump = true;
         settings.query = query;
+        pause();
+        doSearch();
     });
 
     function doSearch() {
@@ -25,7 +27,7 @@ Ronik.EchoStreamer = function(options) {
             q: settings.query
         };
 
-        if(since) {
+        if(!dump && since) {
             data.since = since;
         }
 
@@ -33,7 +35,11 @@ Ronik.EchoStreamer = function(options) {
             dataType: "jsonp",
             data: data,
             success: function(data) {
-                since = data.nextSince;
+                if(since && dump) {
+                    since = null;
+                } else {
+                    since = data.nextSince;
+                }
 
                 timeoutId = setTimeout(doSearch, settings.interval);
 
