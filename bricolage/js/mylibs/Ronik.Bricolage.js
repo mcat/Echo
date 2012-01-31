@@ -45,7 +45,7 @@ Ronik.Bricolage = function(options) {
                 var $content = $('<div>' + entry.object.content + '</div>');
 
                 entry.bricolage.source = entry.source.name.toLowerCase();
-                entry.bricolage.displayDate = parseDate(entry.object.published).toString("MMM d h:mm tt");
+                entry.bricolage.displayDate = getPublishedDate(entry).toString("MMM d h:mm tt");
 
                 //Check to see if we have a video
                 images += processImage(entry.bricolage.source, $content, function(image){
@@ -64,11 +64,8 @@ Ronik.Bricolage = function(options) {
                     entry.bricolage.type = "video";
                 }
 
-                // Render the entry
-                var parentId = entry.targets[0].id;
-                if(posts[parentId]) {
-                    //handle children
-                } else {
+                // Only show root items
+                if(!posts[entry.targets[0].conversationID]) {
                     toPrepend.unshift(entry);
                 }
 
@@ -80,9 +77,16 @@ Ronik.Bricolage = function(options) {
         checkImages();
     }
 
+    function getPublishedDate(entry) {
+        return parseDate(entry.object.published);
+    }
+
     function prependEntries(toPrepend) {
         _.each(toPrepend, function(entry) {
             var $entry = render(entry);
+
+            entry.bricolage.$entry = $entry;
+
             $("#main").prepend($entry);
             $entry.textfill({
                 maxFontPixels: 36,
@@ -241,33 +245,40 @@ Ronik.GenericRenderer = function() {
             template = Handlebars.compile($("#genericTemplate").html());
         },
         render: function(entry){
-            console.log(entry);
-            var styles = "block block-style-1";
+            var styles = ["block", "block-style-1"];
 
             var wide =  false;
             // Determine width
             var text = $('<div>' + entry.object.title + '</div>').text();
             if(text.length > 150) {
+                styles.push("long-text");
                 wide = true;
+            } else if(text.length > 0) {
+                styles.push("short-text");
             }
 
             if(entry.bricolage.image) {
                 var imageWidth = entry.bricolage.image.width;
-                if(imageWidth > 252) {
-                    wide = true;
-                } else if(imageWidth < 200) {
+                if(imageWidth > 200) {
+                    if(imageWidth > 252) {
+                        wide = true;
+                        styles.push("large-image");
+                    } else {
+                        styles.push("small-image");
+                    }
+                } else {
                     // don't show shitty images
                     delete entry.bricolage.image;
                 }
             }
 
             // Add width style
-            styles += " "  + (wide ? "col2" : "col1");
+            styles.push(wide ? "col2" : "col1");
 
             // Add provider style
-            styles += " source-" + entry.bricolage.source;
+            styles.push(" source-" + entry.bricolage.source);
 
-            entry.bricolage.styles = styles;
+            entry.bricolage.styles = styles.join(" ");
 
             return template ? template(entry) : "";
         }
