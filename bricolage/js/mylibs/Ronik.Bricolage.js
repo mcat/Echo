@@ -6,6 +6,11 @@ Ronik.Bricolage = function(options) {
             generic: new Ronik.GenericRenderer(),
             video: new Ronik.VideoRenderer()
         },
+        parsers: {
+            image_facebook: new Ronik.FacebookImageParser(),
+            image_twitter: new Ronik.TwitterImageParser(),
+            image_tumblr: new Ronik.TumblrImageParser()
+        },
         topic: "/ronik/echo/search"
     };
     _.extend(settings, options);
@@ -39,10 +44,11 @@ Ronik.Bricolage = function(options) {
                 entry.bricolage = { type: "generic" };
                 var $content = $('<div>' + entry.object.content + '</div>');
 
+                entry.bricolage.source = entry.source.name.toLowerCase();
                 entry.bricolage.displayDate = parseDate(entry.object.published).toString("MM/dd/yyyy h:mm tt");
 
                 //Check to see if we have a video
-                images += processImage($content, function(image){
+                images += processImage(entry.bricolage.source, $content, function(image){
                     if(image) {
                         entry.bricolage.image = image;
                     }
@@ -69,7 +75,9 @@ Ronik.Bricolage = function(options) {
                 posts[entry.object.id] = entry;
             }
         });
+
         done = true;
+        checkImages();
     }
 
     function prependEntries(toPrepend) {
@@ -85,7 +93,7 @@ Ronik.Bricolage = function(options) {
     }
 
     function render(entry) {
-        var $element = null, renderer = getRenderer(entry.bricolage.type, entry.source.name);
+        var $element = null, renderer = getRenderer(entry.bricolage.type, entry.bricolage.source);
 
         if(renderer) {
             $element = $(renderer.render(entry));
@@ -94,12 +102,21 @@ Ronik.Bricolage = function(options) {
         return $element;
     }
 
+    function getParser(type, source) {
+        return lookupObject(type, source, settings.parsers);
+    }
+
+
     function getRenderer(type, source) {
+        return lookupObject(type, source, settings.renderers);
+    }
+
+    function lookupObject(type, source, objs) {
         var firstChoice =  type + "_" + source.toLowerCase(), renderer = null;
-        if(settings.renderers[firstChoice]) {
-            renderer = settings.renderers[firstChoice];
-        } else if(settings.renderers[type]) {
-            renderer = settings.renderers[type];
+        if(objs[firstChoice]) {
+            renderer = objs[firstChoice];
+        } else if(objs[type]) {
+            renderer = objs[type];
         }
 
         return renderer;
@@ -113,13 +130,10 @@ Ronik.Bricolage = function(options) {
             matches[4], matches[5], matches[6]));
     }
 
-    function processImage($content, callback) {
-        var $image = $content.find(".metadata_image");
-        if($image.length != 0) {
-            var src = $image.data("src-full");
-            if(!src) {
-                src = $image.attr("src");
-            }
+    function processImage(source, $content, callback) {
+        var parser = getParser("image", source);
+        if(parser) {
+            var src = parser.parse($content);
             if(src) {
                 setTimeout(function(){
                     measureImage(src, callback);
@@ -127,7 +141,6 @@ Ronik.Bricolage = function(options) {
                 return 1;
             }
         }
-
         return 0;
     }
 
@@ -178,6 +191,48 @@ Ronik.Bricolage = function(options) {
 };
 
 
+Ronik.TwitterImageParser = function() {};
+Ronik.TwitterImageParser.prototype.parse = function($content) {
+    var src = null;
+    var $image = $content.find(".metadata_image");
+    if($image.length != 0) {
+        src = $image.data("src-full");
+        if(!src) {
+            src = $image.attr("src");
+        }
+    }
+
+    return src;
+};
+
+
+
+Ronik.FacebookImageParser = function() {};
+Ronik.FacebookImageParser.prototype.parse = function($content) {
+    var src = null;
+    var $image = $content.find(".metadata_image");
+    if($image.length != 0) {
+        src = decodeURIComponent($image.attr("src").replace(/.*url=(.*)&?.*/, "$1"));
+    }
+
+    return src;
+};
+
+
+
+Ronik.TumblrImageParser = function() {};
+Ronik.TumblrImageParser.prototype.parse = function($content) {
+    var src = null;
+    var $image = $content.find(".article_media img");
+    if($image.length != 0) {
+        src = $image.attr("src").replace("_250.jpg", "_500.jpg");
+    }
+
+    return src;
+
+};
+
+
 Ronik.GenericRenderer = function() {
     var template = null;
 
@@ -186,10 +241,11 @@ Ronik.GenericRenderer = function() {
             template = Handlebars.compile($("#genericTemplate").html());
         },
         render: function(entry){
+            console.log(entry);
             var styles = "block block-style-1";
 
             var wide =  false;
-            // Add width style
+            // Determine width
             var text = $('<div>' + entry.object.title + '</div>').text();
             if(text.length > 150) {
                 wide = true;
@@ -199,11 +255,11 @@ Ronik.GenericRenderer = function() {
                 wide = true;
             }
 
+            // Add width style
             styles += " "  + (wide ? "col2" : "col1");
 
             // Add provider style
-            var source = entry.source.name.toLowerCase();
-            styles += " source-" + source;
+            styles += " source-" + entry.bricolage.source;
 
             entry.bricolage.styles = styles;
 
