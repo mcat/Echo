@@ -1,5 +1,5 @@
 var Ronik = Ronik || {};
-Ronik.QuerySwitcher = (function(options){
+Ronik.QuerySwitcher = function(options){
 
     var settings = {
         filter: [
@@ -19,6 +19,8 @@ Ronik.QuerySwitcher = (function(options){
         renderTemplate: '#filterTemplate'
     };
 
+    _.extend(settings, options);
+
     function buildFilter(filters) {
         template = Handlebars.compile($(settings.renderTemplate).html());
         var html = template(filters);
@@ -32,14 +34,13 @@ Ronik.QuerySwitcher = (function(options){
         });
     }
 
-    function init(options) {
-        settings = $.extend({}, settings, options);
+    function init() {
         buildFilter(settings.filter);
         bindEvents();
     }
 
     return {
-        init: init
+        start: init
     };
 
-})();
+};
