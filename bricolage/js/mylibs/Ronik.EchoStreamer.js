@@ -15,13 +15,6 @@ Ronik.EchoStreamer = function(options) {
 
     var reset = false;
 
-    $.subscribe("/ronik/echo/switchSearch", function(e, query){
-        reset = true;
-        settings.query = query;
-        pause();
-        get(settings.query, {callback: pollingCallback})
-    });
-
     function get(query, options)  {
         var data = {
             appkey: settings.appKey,
@@ -55,13 +48,22 @@ Ronik.EchoStreamer = function(options) {
         });
     }
 
+    $.subscribe(settings.topic + "/update", function(e, query ){
+        // reload the stream
+        if(query && query != settings.query) {
+            reset = true;
+            settings.query = query;
+            pause();
+            get(settings.query, {callback: pollingCallback});
+        }
+    });
 
 
-    window.loadMore = function() {
+    $.subscribe(settings.topic + "/more", function(){
         if(pageAfter) {
             get(settings.query, { pageAfter: pageAfter });
         }
-    };
+    });
 
     function pollingCallback(data, query, options) {
         timeoutId = setTimeout(function(){

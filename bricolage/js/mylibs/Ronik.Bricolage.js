@@ -20,9 +20,9 @@ Ronik.Bricolage = function(options) {
     var oldestEntry = null;
 
     function init() {
-       _.each(settings.renderers, function(renderer)  {
-           renderer.init();
-       });
+        _.each(settings.renderers, function(renderer)  {
+            renderer.init();
+        });
 
         $.subscribe(settings.topic, function(event, data, dump){
             if (dump) {
@@ -30,6 +30,28 @@ Ronik.Bricolage = function(options) {
                 settings.$container.empty();
             }
             handleEntries(data.entries);
+        });
+
+
+        // Bind Events:
+
+        $(window).scroll(function(){
+            if($(window).height() - $(this).scrollTop()  < 300){
+                $.publish(settings.topic + "/more");
+            }
+        });
+
+        $('#main').on('click', '.block-reply-count', function(){
+            console.log("ok");
+            $(this).parents('.block').addClass('flip');
+        });
+
+        $('#main').on('click', '.block-thread-back', function(){
+            $(this).parents('.block').removeClass('flip');
+        });
+
+        $('#main').on('click', '.block-visibility', function(){
+            $(this).parents('.block').toggleClass('hide-content');
         });
     }
 
@@ -210,26 +232,6 @@ Ronik.Bricolage = function(options) {
 
         return null;
     }
-
-    $(window).scroll(function(){
-        if($(window).height() - $(this).scrollTop()  < 300){
-
-        }
-    });
-
-    $('#main').on('click', '.block-reply-count', function(){
-        console.log("ok");
-        $(this).parents('.block').addClass('flip');
-     });
-
-    $('#main').on('click', '.block-thread-back', function(){
-        $(this).parents('.block').removeClass('flip');
-    });
-
-    $('#main').on('click', '.block-visibility', function(){
-        $(this).parents('.block').toggleClass('hide-content');
-    });
-
 
     return {
         start: init
