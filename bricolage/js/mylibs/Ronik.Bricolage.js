@@ -11,11 +11,13 @@ Ronik.Bricolage = function(options) {
             image_twitter: new Ronik.TwitterImageParser(),
             image_tumblr: new Ronik.TumblrImageParser()
         },
-        topic: "/ronik/echo/search"
+        topic: "/ronik/echo/search",
+        $container: $("#main")
     };
     _.extend(settings, options);
 
     var posts = {};
+    var oldestEntry = null;
 
     function init() {
        _.each(settings.renderers, function(renderer)  {
@@ -25,31 +27,31 @@ Ronik.Bricolage = function(options) {
         $.subscribe(settings.topic, function(event, data, dump){
             if (dump) {
                 posts = {};
-                $('#main').empty();
+                settings.$container.empty();
             }
             handleEntries(data.entries);
         });
     }
 
-
     function handleEntries(entries) {
         var time = new Date().getTime();
-        var toPrepend = [], images = 0, imagesMeasured = 0, done = false;
+        var toAdd = [], images = 0, imagesMeasured = 0, done = false, numEntries = entries.length;
 
         var checkImages = function(){
             if(done && images == imagesMeasured) {
-                prependEntries(toPrepend);
+                add(toAdd);
                 console.log("Displaying new entries took " + ((new Date().getTime() - time) / 1000) + " seconds");
             }
         };
 
-        _.each(entries, function(entry){
+        _.each(entries, function(entry, i){
             if(!posts[entry.object.id]) {
                 entry.bricolage = { type: "generic" };
                 var $content = $('<div>' + entry.object.content + '</div>');
 
                 entry.bricolage.source = entry.source.name.toLowerCase();
-                entry.bricolage.displayDate = parseDate(entry.object.published).toString("MMM d h:mm tt");
+                entry.bricolage.timestamp = getPublishedDate(entry).getTime();
+                entry.bricolage.displayDate = getPublishedDate(entry).toString("MMM d h:mm tt");
 
                 //Check to see if we have a video
                 images += processImage(entry.bricolage.source, $content, function(image){
@@ -68,15 +70,13 @@ Ronik.Bricolage = function(options) {
                     entry.bricolage.type = "video";
                 }
 
-                // Render the entry
-                var parentId = entry.targets[0].id;
-                if(posts[parentId]) {
-                    //handle children
-                } else {
-                    toPrepend.unshift(entry);
+                // Only show root items
+                if(!posts[entry.targets[0].conversationID]) {
+                    toAdd.push(entry);
                 }
 
                 posts[entry.object.id] = entry;
+
             }
         });
 
@@ -84,16 +84,39 @@ Ronik.Bricolage = function(options) {
         checkImages();
     }
 
-    function prependEntries(toPrepend) {
-        _.each(toPrepend, function(entry) {
-            var $entry = render(entry);
-            $("#main").prepend($entry);
-            $entry.textfill({
-                maxFontPixels: 36,
-                innerTag: '.block-message'
+    function getPublishedDate(entry) {
+        return parseDate(entry.object.published);
+    }
+
+    function add(toAdd) {
+        if(toAdd.length > 0) {
+
+            // Determine whether we are appending or prepending
+            var direction = "append";
+            if(!oldestEntry || oldestEntry.bricolage.timestamp < toAdd[0].bricolage.timestamp) {
+                toAdd = toAdd.reverse();
+                direction = "prepend";
+            }
+
+            _.each(toAdd, function(entry) {
+                var $entry = render(entry);
+
+                entry.bricolage.$entry = $entry;
+
+                settings.$container[direction]($entry);
+                $entry.textfill({
+                    maxFontPixels: 36,
+                    innerTag: '.block-message'
+                });
             });
-        });
-        $("#main").masonry('reload');
+            settings.$container.masonry('reload');
+
+            // Save the new oldest date;
+            var lastEntry = _.last(toAdd);
+            if(!oldestEntry || lastEntry.bricolage.timestamp < oldestEntry.bricolage.timestamp) {
+                oldestEntry = lastEntry;
+            }
+        }
     }
 
     function render(entry) {
@@ -256,56 +279,3 @@ Ronik.TumblrImageParser.prototype.parse = function($content) {
 };
 
 
-Ronik.GenericRenderer = function() {
-    var template = null;
-
-    return {
-        init: function() {
-            template = Handlebars.compile($("#genericTemplate").html());
-        },
-        render: function(entry){
-            console.log(entry);
-            var styles = "block block-style-1";
-
-            var wide =  false;
-            // Determine width
-            var text = $('<div>' + entry.object.title + '</div>').text();
-            if(text.length > 150) {
-                wide = true;
-            }
-
-            if(entry.bricolage.image) {
-                var imageWidth = entry.bricolage.image.width;
-                if(imageWidth > 252) {
-                    wide = true;
-                } else if(imageWidth < 200) {
-                    // don't show shitty images
-                    delete entry.bricolage.image;
-                }
-            }
-
-            // Add width style
-            styles += " "  + (wide ? "col2" : "col1");
-
-            // Add provider style
-            styles += " source-" + entry.bricolage.source;
-
-            entry.bricolage.styles = styles;
-
-            return template ? template(entry) : "";
-        }
-    };
-};
-
-Ronik.VideoRenderer = function() {
-    var template = null;
-
-    return {
-        init: function() {
-            template = Handlebars.compile($("#videoTemplate").html());
-        },
-        render: function(entry){
-            return template ? template(entry) : "";
-        }
-    };
-};
