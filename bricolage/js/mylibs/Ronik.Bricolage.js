@@ -36,8 +36,8 @@ Ronik.Bricolage = function(options) {
         // Bind Events:
 
         $(window).scroll(function(){
-            console.log($(document).outerHeight() - $(this).scrollTop());
             if($(document).outerHeight() - ($(this).scrollTop() + $(window).height()) < 300){
+                $('.loading-indicator').css({visibility: "visible"});
                 $.publish(settings.topic + "/more");
             }
         });
