@@ -27,9 +27,8 @@ Ronik.QuerySwitcher = (function(options){
 
     function bindEvents(){
         $('[data-filter]').on('click', function(){
-            var options = {};
-            options.query = $(this).attr('data-filter');
-            $.publish(settings.topic + "/update", [options]);
+            var query = $(this).attr('data-filter');
+            $.publish(settings.topic + "/update", [query]);
         });
     }
 
