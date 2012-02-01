@@ -416,7 +416,7 @@ body {
 }
 
 .hide-content .block-message {
-    opacity: 0;
+    left: -500px;
 }
 
 .block-message {
@@ -428,11 +428,11 @@ body {
     /*hyphens: auto;*/
     overflow: hidden;
 
-    -webkit-transition: -webkit-opacity .5s ease-in-out;
-    -moz-transition: -moz-opacity .5s ease-in-out;
-    -o-transition: -o-opacity .5s ease-in-out;
-    -ms-transition: -ms-opacity .5s ease-in-out;
-    transition: opacity .5s ease-in-out;
+    -webkit-transition: left .5s ease-in-out;
+    -moz-transition: left .5s ease-in-out;
+    -o-transition: left .5s ease-in-out;
+    -ms-transition: left .5s ease-in-out;
+    transition: left .5s ease-in-out;
 }
 
 .block-image {
@@ -547,6 +547,10 @@ body {
 footer {
     text-align: center;
     padding: 40px 0;
+}
+
+.loading-indicator {
+    visibility: hidden;
 }
 
 
