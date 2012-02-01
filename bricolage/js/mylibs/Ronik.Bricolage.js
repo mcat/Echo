@@ -11,11 +11,13 @@ Ronik.Bricolage = function(options) {
             image_twitter: new Ronik.TwitterImageParser(),
             image_tumblr: new Ronik.TumblrImageParser()
         },
-        topic: "/ronik/echo/search"
+        topic: "/ronik/echo/search",
+        $container: $("#main")
     };
     _.extend(settings, options);
 
     var posts = {};
+    var oldestEntry = null;
 
     function init() {
        _.each(settings.renderers, function(renderer)  {
@@ -25,30 +27,30 @@ Ronik.Bricolage = function(options) {
         $.subscribe(settings.topic, function(event, data, dump){
             if (dump) {
                 posts = {};
-                $('#main').empty();
+                settings.$container.empty();
             }
             handleEntries(data.entries);
         });
     }
 
-
     function handleEntries(entries) {
         var time = new Date().getTime();
-        var toPrepend = [], images = 0, imagesMeasured = 0, done = false;
+        var toAdd = [], images = 0, imagesMeasured = 0, done = false, numEntries = entries.length;
 
         var checkImages = function(){
             if(done && images == imagesMeasured) {
-                prependEntries(toPrepend);
+                add(toAdd);
                 console.log("Displaying new entries took " + ((new Date().getTime() - time) / 1000) + " seconds");
             }
         };
 
-        _.each(entries, function(entry){
+        _.each(entries, function(entry, i){
             if(!posts[entry.object.id]) {
                 entry.bricolage = { type: "generic" };
                 var $content = $('<div>' + entry.object.content + '</div>');
 
                 entry.bricolage.source = entry.source.name.toLowerCase();
+                entry.bricolage.timestamp = getPublishedDate(entry).getTime();
                 entry.bricolage.displayDate = getPublishedDate(entry).toString("MMM d h:mm tt");
 
                 //Check to see if we have a video
@@ -70,10 +72,11 @@ Ronik.Bricolage = function(options) {
 
                 // Only show root items
                 if(!posts[entry.targets[0].conversationID]) {
-                    toPrepend.unshift(entry);
+                    toAdd.push(entry);
                 }
 
                 posts[entry.object.id] = entry;
+
             }
         });
 
@@ -85,19 +88,35 @@ Ronik.Bricolage = function(options) {
         return parseDate(entry.object.published);
     }
 
-    function prependEntries(toPrepend) {
-        _.each(toPrepend, function(entry) {
-            var $entry = render(entry);
+    function add(toAdd) {
+        if(toAdd.length > 0) {
 
-            entry.bricolage.$entry = $entry;
+            // Determine whether we are appending or prepending
+            var direction = "append";
+            if(!oldestEntry || oldestEntry.bricolage.timestamp < toAdd[0].bricolage.timestamp) {
+                toAdd = toAdd.reverse();
+                direction = "prepend";
+            }
 
-            $("#main").prepend($entry);
-            $entry.textfill({
-                maxFontPixels: 36,
-                innerTag: '.block-message'
+            _.each(toAdd, function(entry) {
+                var $entry = render(entry);
+
+                entry.bricolage.$entry = $entry;
+
+                settings.$container[direction]($entry);
+                $entry.textfill({
+                    maxFontPixels: 36,
+                    innerTag: '.block-message'
+                });
             });
-        });
-        $("#main").masonry('reload');
+            settings.$container.masonry('reload');
+
+            // Save the new oldest date;
+            var lastEntry = _.last(toAdd);
+            if(!oldestEntry || lastEntry.bricolage.timestamp < oldestEntry.bricolage.timestamp) {
+                oldestEntry = lastEntry;
+            }
+        }
     }
 
     function render(entry) {
@@ -260,63 +279,3 @@ Ronik.TumblrImageParser.prototype.parse = function($content) {
 };
 
 
-Ronik.GenericRenderer = function() {
-    var template = null;
-
-    return {
-        init: function() {
-            template = Handlebars.compile($("#genericTemplate").html());
-        },
-        render: function(entry){
-            var styles = ["block", "block-style-1"];
-
-            var wide =  false;
-            // Determine width
-            var text = $('<div>' + entry.object.title + '</div>').text();
-            if(text.length > 150) {
-                styles.push("long-text");
-                wide = true;
-            } else if(text.length > 0) {
-                styles.push("short-text");
-            }
-
-            if(entry.bricolage.image) {
-                var imageWidth = entry.bricolage.image.width;
-                if(imageWidth > 200) {
-                    if(imageWidth > 252) {
-                        wide = true;
-                        styles.push("large-image");
-                    } else {
-                        styles.push("small-image");
-                    }
-                } else {
-                    // don't show shitty images
-                    delete entry.bricolage.image;
-                }
-            }
-
-            // Add width style
-            styles.push(wide ? "col2" : "col1");
-
-            // Add provider style
-            styles.push(" source-" + entry.bricolage.source);
-
-            entry.bricolage.styles = styles.join(" ");
-
-            return template ? template(entry) : "";
-        }
-    };
-};
-
-Ronik.VideoRenderer = function() {
-    var template = null;
-
-    return {
-        init: function() {
-            template = Handlebars.compile($("#videoTemplate").html());
-        },
-        render: function(entry){
-            return template ? template(entry) : "";
-        }
-    };
-};

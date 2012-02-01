@@ -11,47 +11,66 @@ Ronik.EchoStreamer = function(options) {
 
     var timeoutId = null;
     var since = null;
+    var pageAfter = null;
 
-    var dump = false;
+    var reset = false;
 
     $.subscribe("/ronik/echo/switchSearch", function(e, query){
-        dump = true;
+        reset = true;
         settings.query = query;
         pause();
-        doSearch();
+        get(settings.query, {callback: pollingCallback})
     });
 
-    function doSearch() {
+    function get(query, options)  {
         var data = {
             appkey: settings.appKey,
-            q: settings.query
+            q: query + (options.pageAfter ? ' pageAfter:' + options.pageAfter : '')
         };
 
-        if(!dump && since) {
-            data.since = since;
+        if(options.since) {
+            data.since = options.since;
         }
 
         $.ajax("http://api.echoenabled.com/v1/search", {
             dataType: "jsonp",
             data: data,
             success: function(data) {
-                if(since && dump) {
-                    since = null;
-                } else {
-                    since = data.nextSince;
-                }
 
-                timeoutId = setTimeout(doSearch, settings.interval);
+                since = (since && reset) ?  null : data.nextSince;
+                if(data.nextPageAfter) {
+                    pageAfter = (pageAfter == null || reset) ? parseFloat(data.nextPageAfter) :
+                        Math.min(parseFloat(data.nextPageAfter), pageAfter);
+                }
 
                 //only publish an event when there is new content
                 if(data.entries.length != 0) {
-                    $.publish(settings.topic, [data, dump]);
-                    dump = false;
+                    $.publish(settings.topic, [data, reset]);
+                    reset = false;
                 }
+
+                $.isFunction(options.callback) && options.callback(data, query, options);
             }
 
         });
     }
+
+
+
+    window.loadMore = function() {
+        if(pageAfter) {
+            get(settings.query, { pageAfter: pageAfter });
+        }
+    };
+
+    function pollingCallback(data, query, options) {
+        timeoutId = setTimeout(function(){
+            options = options || {};
+            options.since = since;
+            get(query, options);
+        }, settings.interval);
+    }
+
 
     function pause() {
         if(timeoutId != null) {
@@ -62,7 +81,9 @@ Ronik.EchoStreamer = function(options) {
 
 
     return {
-        start: doSearch,
+        start: function(){
+            get(settings.query, {callback: pollingCallback});
+        },
         pause: pause
     };
 };
