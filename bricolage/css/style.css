@@ -408,11 +408,17 @@ body {
 }
 
 .block-visibility {
+    display: none;
     position: absolute;
     bottom: 5px;
     right: 5px;
     z-index: 100;
     cursor: pointer;
+}
+
+.large-image .block-visibility,
+.small-image .block-visibility {
+    display: block;
 }
 
 .hide-content .block-message {
