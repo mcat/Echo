@@ -194,6 +194,19 @@ Ronik.Bricolage = function(options) {
         }
     });
 
+    $('#main').on('click', '.block-reply-count', function(){
+        console.log("ok");
+        $(this).parents('.block').addClass('flip');
+     });
+
+    $('#main').on('click', '.block-thread-back', function(){
+        $(this).parents('.block').removeClass('flip');
+    });
+
+    $('#main').on('click', '.block-visibility', function(){
+        $(this).parents('.block').toggleClass('hide-content');
+    });
+
 
     return {
         start: init
