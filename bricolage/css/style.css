@@ -291,7 +291,7 @@ body {
 }
 
 /* Flip */
-.block:hover .block-card {
+.block.flip .block-card {
     -webkit-transform: rotateY(180deg);
 }
 
@@ -301,7 +301,7 @@ body {
 }
 
 /* Flip */
-.block:hover .front {
+.block.flip .block-card-front {
     z-index: 0;
 }
 
@@ -311,6 +311,14 @@ body {
     display: block;
     box-sizing: border-box;
     padding: 30px 20px 20px 12px;
+
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.65) 2%, rgba(0,0,0,0.42) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.65)), color-stop(2%,rgba(0,0,0,0.65)), color-stop(100%,rgba(0,0,0,0.42))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.65) 2%,rgba(0,0,0,0.42) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.65) 2%,rgba(0,0,0,0.42) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.65) 2%,rgba(0,0,0,0.42) 100%); /* IE10+ */
+    background: linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.65) 2%,rgba(0,0,0,0.42) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#6b000000',GradientType=0 ); /* IE6-9 */
 }
 
 /* Flip */
@@ -360,6 +368,57 @@ body {
     z-index: 10;
 }
 
+.block-reply-count {
+    position: absolute;
+    bottom: 15px;
+    left: -100px;
+    -webkit-transition: left .5s ease-in-out;
+    -moz-transition: left .5s ease-in-out;
+    -o-transition: left .5s ease-in-out;
+    -ms-transition: left .5s ease-in-out;
+    transition: left .5s ease-in-out;
+
+    background: #4c4c4c; /* Old browsers */
+    background: -moz-linear-gradient(top, #4c4c4c 0%, #595959 12%, #666666 25%, #474747 39%, #2c2c2c 50%, #000000 51%, #111111 60%, #2b2b2b 76%, #1c1c1c 91%, #131313 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4c4c4c), color-stop(12%,#595959), color-stop(25%,#666666), color-stop(39%,#474747), color-stop(50%,#2c2c2c), color-stop(51%,#000000), color-stop(60%,#111111), color-stop(76%,#2b2b2b), color-stop(91%,#1c1c1c), color-stop(100%,#131313)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* IE10+ */
+    background: linear-gradient(top, #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313',GradientType=0 ); /* IE6-9 */
+    z-index: 100;
+    padding: 0 10px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    cursor: pointer;
+}
+
+.block:hover .block-reply-count {
+    left: 0;
+}
+
+.block-thread-back {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.block-visibility {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    z-index: 100;
+    cursor: pointer;
+}
+
+.hide-content .block-message {
+    opacity: 0;
+}
+
 .block-message {
     position: relative;
     font: bold 25px/1.3 "Verdana", sans-serif;
@@ -368,6 +427,12 @@ body {
     /*-webkit-hyphens: auto;*/
     /*hyphens: auto;*/
     overflow: hidden;
+
+    -webkit-transition: -webkit-opacity .5s ease-in-out;
+    -moz-transition: -moz-opacity .5s ease-in-out;
+    -o-transition: -o-opacity .5s ease-in-out;
+    -ms-transition: -ms-opacity .5s ease-in-out;
+    transition: opacity .5s ease-in-out;
 }
 
 .block-image {
