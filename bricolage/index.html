@@ -51,11 +51,25 @@
         }).start();
 
         new Ronik.EchoStreamer({
-            query: "((childrenof:http://www.ronikdesign.com/id_Test -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:25", //((childrenof:http://www.ronikdesign.com/~mark/echo/bricolage/input.html))
+            query: "((childrenof:http://www.ronikdesign.com/id_All -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:25", //((childrenof:http://www.ronikdesign.com/~mark/echo/bricolage/input.html))
             topic: topic
         }).start();
 
         new Ronik.QuerySwitcher({
+            filter: [
+                {
+                    title: "All",
+                    query: "((childrenof:http://www.ronikdesign.com/id_All -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:25"
+                },
+                {
+                    title: "Facebook",
+                    query: "((childrenof:http://www.ronikdesign.com/id_Facebook -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:25"
+                },
+                {
+                    title: "Twitter",
+                    query: "((childrenof:http://www.ronikdesign.com/id_Twitter -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:25"
+                }
+            ],
             topic: topic
         }).start();
 
