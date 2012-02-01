@@ -32,7 +32,7 @@ Ronik.QuerySwitcher = (function(options){
         });
     }
 
-    function init() {
+    function init(options) {
         settings = $.extend({}, settings, options);
         buildFilter(settings.filter);
         bindEvents();
