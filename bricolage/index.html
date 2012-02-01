@@ -46,14 +46,18 @@
 
     $(function(){
 
-        new Ronik.Bricolage({ topic: topic }).start();
-
-        new Ronik.EchoStreamer({
-            query: "((childrenof:http://www.ronikdesign.com/id_Test -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:8", //((childrenof:http://www.ronikdesign.com/~mark/echo/bricolage/input.html))
+        new Ronik.Bricolage({
             topic: topic
         }).start();
 
-        Ronik.QuerySwitcher.init();
+        new Ronik.EchoStreamer({
+            query: "((childrenof:http://www.ronikdesign.com/id_Test -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned)) safeHTML:false children:1 -state:ModeratorDeleted,SystemFlagged,ModeratorFlagged -user.state:ModeratorBanned childrenSortOrder:reverseChronological childrenItemsPerPage:2 itemsPerPage:25", //((childrenof:http://www.ronikdesign.com/~mark/echo/bricolage/input.html))
+            topic: topic
+        }).start();
+
+        Ronik.QuerySwitcher.init({
+            topic: topic
+        });
 
     });
 </script>
