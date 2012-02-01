@@ -43,7 +43,6 @@ Ronik.Bricolage = function(options) {
         });
 
         $('#main').on('click', '.block-reply-count', function(){
-            console.log("ok");
             $(this).parents('.block').addClass('flip');
         });
 
@@ -72,6 +71,7 @@ Ronik.Bricolage = function(options) {
                 entry.bricolage = { type: "generic" };
                 var $content = $('<div>' + entry.object.content + '</div>');
 
+                entry.bricolage.text = getText(entry.bricolage.source, $content);
                 entry.bricolage.source = entry.source.name.toLowerCase();
                 entry.bricolage.timestamp = getPublishedDate(entry).getTime();
                 entry.bricolage.displayDate = getPublishedDate(entry).toString("MMM d h:mm tt");
@@ -213,7 +213,7 @@ Ronik.Bricolage = function(options) {
             .attr({ src: url });
     }
 
-
+    // todo use external parsers
     function getVideo($content) {
         // videos extracted from twitter
         var $video = $content.find(".meta_video");
@@ -232,6 +232,17 @@ Ronik.Bricolage = function(options) {
         }
 
         return null;
+    }
+
+    // todo use external parsers
+    function getText(source, $content) {
+
+        var html = $content.find(".note_title").html();
+        if(html == null) {
+            html = $content.find(".article_media_caption").html();
+        }
+
+        return html;
     }
 
     return {
